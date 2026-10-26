@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>JDS Desi Arcade Pro - By Jubayerul Hasan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #090b14;
+            --card-bg: #131728;
+            --primary: #ff2a5f;
+            --secondary: #00f2fe;
+            --gold: #ffcc00;
+            --success: #00e676;
+            --text: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(255, 42, 95, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 80%, rgba(0, 242, 254, 0.15) 0%, transparent 40%);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* ================= LOCK SCREEN ================= */
+        #lockScreen {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #070912 0%, #161b33 100%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .lock-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px;
+            padding: 32px 24px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 42, 95, 0.2);
+            animation: floatCard 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatCard {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-8px); }
+        }
+
+        .vip-badge {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--gold), #ff8800);
+            color: #000;
+            font-weight: 800;
+            font-size: 12px;
+            padding: 4px 14px;
+            border-radius: 50px;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .lock-title {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #fff, var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 6px;
+        }
+
+        .lock-sub {
+            font-size: 14px;
+            color: #9ba4b5;
+            margin-bottom: 24px;
+        }
+
+        .key-input {
+            width: 100%;
+            padding: 15px 18px;
+            border-radius: 14px;
+            border: 2px solid rgba(0, 242, 254, 0.3);
+            background: rgba(0, 0, 0, 0.45);
+            color: var(--gold);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            text-align: center;
+            letter-spacing: 2px;
+            outline: none;
+            transition: 0.3s;
+            margin-bottom: 14px;
+        }
+
+        .key-input:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+        }
+
+        .unlock-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(90deg, var(--primary), #ff6b00);
+            color: #fff;
+            font-family: 'Hind Siliguri', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 42, 95, 0.4);
+            transition: transform 0.2s;
+        }
+
+        .unlock-btn:active {
+            transform: scale(0.96);
+        }
+
+        .error-msg {
+            color: #ff4d4d;
+            font-size: 14px;
+            margin-top: 10px;
+            min-height: 20px;
+            font-weight: 600;
+        }
+
+        .dev-credit-box {
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 13px;
+            color: #b0b8c8;
+        }
+
+        .dev-name {
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        /* ================= MAIN APP CONTAINER ================= */
+        #appContainer {
+            width: 100%;
+            max-width: 480px;
+            min-height: 100vh;
+            display: none;
+            flex-direction: column;
+            padding: 14px;
+        }
+
+        /* Header */
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(19, 23, 40, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 16px;
+            border-radius: 18px;
+            margin-bottom: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        .brand-wrap h1 {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--gold), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        .brand-wrap p {
+            font-size: 11px;
+            color: #a0aab8;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .coin-pill {
+            background: rgba(255, 204, 0, 0.15);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 5px 10px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .icon-btn {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #fff;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Lobby View */
+        #lobbyView {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            flex: 1;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, #2b1055 0%, #7597de 100%);
+            border-radius: 20px;
+            padding: 18px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        .hero-banner h2 {
+            font-size: 20px;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .hero-banner p {
+            font-size: 13px;
+            color: #e2e8f0;
+            max-width: 85%;
+        }
+
+        .game-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 20px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card:hover, .game-card:active {
+            transform: translateY(-3px);
+            border-color: var(--secondary);
+        }
+
+        .game-icon {
+            width: 68px;
+            height: 68px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            flex-shrink: 0;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.3);
+        }
+
+        .game-info {
+            flex: 1;
+        }
+
+        .game-tag {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .game-info h3 {
+            font-size: 18px;
+            margin-bottom: 3px;
+            color: #fff;
+        }
+
+        .game-info p {
+            font-size: 12px;
+            color: #9ba4b5;
+            line-height: 1.35;
+        }
+
+        .play-badge {
+            background: linear-gradient(135deg, var(--primary), #ff6b00);
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 13px;
+            box-shadow: 0 4px 12px rgba(255, 42, 95, 0.35);
+        }
+
+        /* ================= GAME VIEW ================= */
+        #gameView {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .game-top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            background: rgba(19, 23, 40, 0.9);
+            padding: 8px 12px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-family: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .hud-stats {
+            display: flex;
+            gap: 12px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .task-banner {
+            width: 100%;
+            background: linear-gradient(90deg, rgba(255, 204, 0, 0.18), rgba(0, 242, 254, 0.18));
+            border: 1px solid rgba(255, 204, 0, 0.4);
+            color: var(--gold);
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .canvas-wrap {
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            height: 500px;
+            background: #1a1f2e;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.15);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.6);
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Funny Dialogue Meme Toast */
+        #memeToast {
+            position: absolute;
+            top: 14px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.8);
+            background: #ffcc00;
+            color: #000;
+            font-weight: 700;
+            font-size: 14px;
+            padding: 6px 16px;
+            border-radius: 50px;
+            border: 2px solid #000;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 20;
+        }
+
+        #memeToast.show {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+
+        /* Game Over / Task Complete Overlay */
+        #gameOverlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(9, 11, 20, 0.88);
+            backdrop-filter: blur(6px);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+            z-index: 30;
+        }
+
+        #gameOverlay h2 {
+            font-size: 28px;
+            color: var(--gold);
+            margin-bottom: 6px;
+        }
+
+        #gameOverlay p {
+            font-size: 15px;
+            color: #d0d7e2;
+            margin-bottom: 16px;
+        }
+
+        .overlay-btns {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), #ff6b00);
+            border: none;
+            color: #fff;
+            padding: 12px 22px;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* Touch Controls */
+        .touch-controls {
+            width: 100%;
+            max-width: 420px;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .ctrl-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 14px 10px;
+            border-radius: 16px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: transform 0.1s, background 0.1s;
+        }
+
+        .ctrl-btn:active {
+            transform: scale(0.94);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .ctrl-action {
+            background: linear-gradient(135deg, #ff2a5f, #ff7b00);
+            border-color: #ff9900;
+            font-size: 17px;
+            box-shadow: 0 5px 20px rgba(255, 42, 95, 0.45);
+        }
+
+        /* Footer */
+        .app-footer {
+            margin-top: auto;
+            padding: 16px 8px 6px;
+            text-align: center;
+            font-size: 12px;
+            color: #8a94a6;
+        }
+
+        .app-footer span {
+            color: var(--gold);
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= VIP SECRET KEY LOCK SCREEN ================= -->
+    <div id="lockScreen">
+        <div class="lock-card">
+            <div class="vip-badge">👑 VIP Exclusive Edition</div>
+            <h1 class="lock-title">দেশি আর্কেড প্রো 🎮</h1>
+            <p class="lock-sub">অ্যাপটি ব্যবহার করতে আপনার Secret Access Key দিন</p>
+            
+            <input type="text" id="secretKeyInput" class="key-input" placeholder="ENTER SECRET KEY" autocomplete="off">
+            <button class="unlock-btn" onclick="verifyKey()">আনলক করুন 🔓</button>
+            <div id="errorMsg" class="error-msg"></div>
+
+            <div class="dev-credit-box">
+                <div>Developed & Designed By</div>
+                <div class="dev-name">✨ Jubayerul Hasan ✨</div>
+                <div style="font-size: 11px; margin-top: 2px; color: #00f2fe;">Founder, Jubayer Digital Studio (JDS)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= MAIN APPLICATION ================= -->
+    <div id="appContainer">
+        <!-- Top Header -->
+        <header class="app-header">
+            <div class="brand-wrap">
+                <h1>দেশি আর্কেড প্রো 🔥</h1>
+                <p>Dev: <strong style="color:#ffcc00;">Jubayerul Hasan</strong></p>
+            </div>
+            <div class="header-controls">
+                <div class="coin-pill">🪙 <span id="totalCoinsEl">0</span></div>
+                <button class="icon-btn" id="soundToggleBtn" onclick="toggleSound()" title="সাউন্ড">🔊</button>
+                <button class="icon-btn" onclick="lockApp()" title="লক অ্যাপ">🔒</button>
+            </div>
+        </header>
+
+        <!-- LOBBY VIEW (3 GAMES) -->
+        <div id="lobbyView">
+            <div class="hero-banner">
+                <h2>স্বাগতম ভাইজান! 🚀</h2>
+                <p>বাংলার ভাইরাল ৩টি মজার গেম এখন এক অ্যাপে! টাস্ক পূরণ করে লেভেল জিতুন আর মজা নিন!</p>
+            </div>
+
+            <!-- Game 1: Baper Rasta -->
+            <div class="game-card" onclick="launchGame('baperRasta')">
+                <div class="game-icon" style="background: linear-gradient(135deg, #00b09b, #96c93d);">🛺</div>
+                <div class="game-info">
+                    <span class="game-tag" style="background:#00e676; color:#000;">🔥 Most Viral</span>
+                    <h3>বাপের রাস্তা: রিকশা রাশ</h3>
+                    <p>বেপরোয়া অটো চালিয়ে গাড়ি ও গর্ত ডজ করুন! হর্ন মেরে সবাইকে সাইড করান!</p>
+                </div>
+                <div class="play-badge">খেলুন ▶</div>
+            </div>
+
+            <!-- Game 2: Dhoro Tesla Maro Chor -->
+            <div class="game-card" onclick="launchGame('maroChor')">
+                <div class="game-icon" style="background: linear-gradient(135deg, #ff416c, #ff4b2b);">👋</div>
+                <div class="game-info">
+                    <span class="game-tag" style="background:#ffcc00; color:#000;">⚡ Action Comedy</span>
+                    <h3>ধরো টেসলা মারো চড়</h3>
+                    <p>বাইক নিয়ে ছুটুন! সামনে বেপরোয়া বাংলার টেসলা (অটো) পেলেই ঠাস করে চড় মেরে সরান!</p>
+                </div>
+                <div class="play-badge">খেলুন ▶</div>
+            </div>
+
+            <!-- Game 3: Biyebari Kacchi Rush -->
+            <div class="game-card" onclick="launchGame('kacchiRush')">
+                <div class="game-icon" style="background: linear-gradient(135deg, #f7971e, #ffd200);">🍲</div>
+                <div class="game-info">
+                    <span class="game-tag" style="background:#00f2fe; color:#000;">🍗 Funny Food</span>
+                    <h3>কাচ্চির শেষ আলু</h3>
+                    <p>বিয়ে বাড়িতে কাচ্চির আলু, রোস্ট আর বোরহানি ক্যাচ ধরুন! এলাচি ও মুরুব্বিদের প্রশ্ন থেকে বাঁচুন!</p>
+                </div>
+                <div class="play-badge">খেলুন ▶</div>
+            </div>
+        </div>
+
+        <!-- ACTIVE GAME VIEW -->
+        <div id="gameView">
+            <div class="game-top-bar">
+                <button class="back-btn" onclick="returnToLobby()">⬅ লবিতে ফিরুন</button>
+                <div class="hud-stats">
+                    <span id="hudScore">স্কোর: 0</span>
+                    <span id="hudLives">❤️❤️❤️</span>
+                </div>
+            </div>
+
+            <div id="taskBanner" class="task-banner">🎯 টাস্ক: ১৫০ পয়েন্ট করে লেভেল জিতুন!</div>
+
+            <div class="canvas-wrap">
+                <div id="memeToast">মামা সাইড দেন, বাপের রাস্তা!</div>
+                <canvas id="gameCanvas" width="380" height="500"></canvas>
+
+                <!-- Game Over / Win Overlay -->
+                <div id="gameOverlay">
+                    <h2 id="overlayTitle">গেম ওভার! 💥</h2>
+                    <p id="overlayDesc">আপনার স্কোর: 0</p>
+                    <div class="overlay-btns">
+                        <button class="btn-primary" onclick="restartCurrentGame()">আবার খেলুন 🔄</button>
+                        <button class="back-btn" style="padding: 12px 16px;" onclick="returnToLobby()">লবি 🏠</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Touch Controls -->
+            <div class="touch-controls">
+                <button class="ctrl-btn" id="btnLeft">⬅️ বামে</button>
+                <button class="ctrl-btn ctrl-action" id="btnAction">📢 হর্ন / চড়</button>
+                <button class="ctrl-btn" id="btnRight">ডানে ➡️</button>
+            </div>
+        </div>
+
+        <footer class="app-footer">
+            Crafted with ❤️ by <span>Jubayerul Hasan</span> | Jubayer Digital Studio
+        </footer>
+    </div>
+
+    <script>
+        /* ==============================================================
+           1. SECRET KEY AUTHENTICATION SYSTEM
+           যেকোনো সময় নিচের লিস্টে নতুন কী যোগ বা পরিবর্তন করতে পারবেন
+        ============================================================== */
+        const SECRET_KEYS = [
+            "JDS-VIP-2026",
+            "JUBAYER-777",
+            "SYLHET-PRO"
+        ];
+
+        const STORAGE_UNLOCK_KEY = "jds_arcade_unlocked_v1";
+        const STORAGE_COINS_KEY = "jds_arcade_coins_v1";
+
+        let totalCoins = parseInt(localStorage.getItem(STORAGE_COINS_KEY) || "0");
+        document.getElementById("totalCoinsEl").innerText = totalCoins;
+
+        function addCoins(amount) {
+            totalCoins += amount;
+            localStorage.setItem(STORAGE_COINS_KEY, totalCoins);
+            document.getElementById("totalCoinsEl").innerText = totalCoins;
+        }
+
+        function verifyKey() {
+            const input = document.getElementById("secretKeyInput").value.trim().toUpperCase();
+            const errEl = document.getElementById("errorMsg");
+
+            if (SECRET_KEYS.includes(input)) {
+                localStorage.setItem(STORAGE_UNLOCK_KEY, "true");
+                playSfx("win");
+                document.getElementById("lockScreen").style.display = "none";
+                document.getElementById("appContainer").style.display = "flex";
+            } else {
+                playSfx("hit");
+                errEl.innerText = "❌ ভুল Secret Key! জুবায়ের ভাইয়ের কাছ থেকে সঠিক কী নিন।";
+            }
+        }
+
+        function lockApp() {
+            returnToLobby();
+            localStorage.removeItem(STORAGE_UNLOCK_KEY);
+            document.getElementById("secretKeyInput").value = "";
+            document.getElementById("errorMsg").innerText = "";
+            document.getElementById("appContainer").style.display = "none";
+            document.getElementById("lockScreen").style.display = "flex";
+        }
+
+        // Check if already unlocked
+        window.addEventListener("DOMContentLoaded", () => {
+            if (localStorage.getItem(STORAGE_UNLOCK_KEY) === "true") {
+                document.getElementById("lockScreen").style.display = "none";
+                document.getElementById("appContainer").style.display = "flex";
+            }
+            document.getElementById("secretKeyInput").addEventListener("keypress", (e) => {
+                if (e.key === "Enter") verifyKey();
+            });
+        });
+
+        /* ==============================================================
+           2. WEB AUDIO SYNTHESIZER (NO EXTERNAL MP3 NEEDED)
+        ============================================================== */
+        let soundEnabled = true;
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === "suspended") {
+                audioCtx.resume();
+            }
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            document.getElementById("soundToggleBtn").innerText = soundEnabled ? "🔊" : "🔇";
+        }
+
+        function playSfx(type) {
+            if (!soundEnabled) return;
+            try {
+                initAudio();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                const now = audioCtx.currentTime;
+
+                if (type === "horn") {
+                    osc.type = "sawtooth";
+                    osc.frequency.setValueAtTime(420, now);
+                    osc.frequency.setValueAtTime(520, now + 0.08);
+                    gain.gain.setValueAtTime(0.18, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.28);
+                    osc.start(now);
+                    osc.stop(now + 0.28);
+                } else if (type === "slap") {
+                    osc.type = "triangle";
+                    osc.frequency.setValueAtTime(750, now);
+                    osc.frequency.exponentialRampToValueAtTime(90, now + 0.16);
+                    gain.gain.setValueAtTime(0.3, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.16);
+                    osc.start(now);
+                    osc.stop(now + 0.16);
+                } else if (type === "score") {
+                    osc.type = "sine";
+                    osc.frequency.setValueAtTime(520, now);
+                    osc.frequency.setValueAtTime(780, now + 0.07);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.18);
+                    osc.start(now);
+                    osc.stop(now + 0.18);
+                } else if (type === "hit") {
+                    osc.type = "sawtooth";
+                    osc.frequency.setValueAtTime(160, now);
+                    osc.frequency.linearRampToValueAtTime(55, now + 0.3);
+                    gain.gain.setValueAtTime(0.25, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+                } else if (type === "win") {
+                    osc.type = "triangle";
+                    osc.frequency.setValueAtTime(440, now);
+                    osc.frequency.setValueAtTime(554, now + 0.1);
+                    osc.frequency.setValueAtTime(659, now + 0.2);
+                    osc.frequency.setValueAtTime(880, now + 0.3);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+                    osc.start(now);
+                    osc.stop(now + 0.5);
+                }
+            } catch (e) {}
+        }
+
+        /* ==============================================================
+           3. FUNNY DIALOGUE TOAST SYSTEM
+        ============================================================== */
+        let toastTimeout = null;
+        function showMemeDialogue(text) {
+            const toast = document.getElementById("memeToast");
+            toast.innerText = text;
+            toast.classList.add("show");
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove("show");
+            }, 1700);
+        }
+
+        /* ==============================================================
+           4. CORE GAME ENGINE & STATE
+        ============================================================== */
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+
+        let currentGame = null;
+        let animId = null;
+        let gameActive = false;
+
+        let score = 0;
+        let lives = 3;
+        let level = 1;
+        let taskTarget = 150;
+        let roadOffset = 0;
+
+        // Lanes for Road Games (0: Left, 1: Center, 2: Right)
+        const LANES = [75, 190, 305];
+        let playerLane = 1;
+        let playerX = LANES[1];
+        let entities = [];
+        let particles = [];
+        let floatingTexts = [];
+        let slapAnimTimer = 0;
+        let speedBoostTimer = 0;
+
+        const DIALOGUES_BAPER_RASTA = [
+            "মামা সাইড দেন, বাপের রাস্তা! 🛺",
+            "ব্রেক নাই মামা, সামনে থেকে সরেন! 🔥",
+            "ডাইনে বইসা বাঁয়ে ইন্ডিকেটর! 😂",
+            "রাস্তা আমার শ্বশুরের! 😎",
+            "উড়াধুরা টান দে মামা! 🚀",
+            "সিগন্যাল মানি না, আমি রিকশাওয়ালা! 👑"
+        ];
+
+        const DIALOGUES_MARO_CHOR = [
+            "ঠাস!! এই লও বাংলার টেসলা! 👋",
+            "হুটহাট মাঝ রাস্তায় ঘুরোস ক্যান?! 😡",
+            "ধরো টেসলা মারো চড়! 💥",
+            "ইন্ডিকেটর ছাড়া মোড় নিবি আর?! 👋",
+            "সাইডে চাপা মামা, বাইক আসে! 🏍️",
+            "এক চড়ে ঢাকা টু সিলেট! 🚀"
+        ];
+
+        const DIALOGUES_KACCHI = [
+            "আহ! কাচ্চির সেই নরম আলু! 🥔🤤",
+            "ভাই, আমার পাতে আরেক পিস রোস্ট দেন! 🍗",
+            "বোরহানি ছাড়া বিয়ে বাড়ি জমে না! 🥤",
+            "ছিঃ! কাচ্চির ভেতর এলাচি কামড় পড়ছে! 🤮",
+            "আঙ্কেল, বিয়ে কবে করবো জিগাইয়েন না! 😭"
+        ];
+
+        function launchGame(gameType) {
+            currentGame = gameType;
+            document.getElementById("lobbyView").style.display = "none";
+            document.getElementById("gameView").style.display = "flex";
+            document.getElementById("gameOverlay").style.display = "none";
+
+            const actionBtn = document.getElementById("btnAction");
+            if (gameType === "baperRasta") {
+                actionBtn.innerText = "📢 হর্ন ও বুস্ট";
+            } else if (gameType === "maroChor") {
+                actionBtn.innerText = "👋 চড় মারুন!";
+            } else {
+                actionBtn.innerText = "⚡ স্পিড ড্যাশ";
+            }
+
+            startNewSession();
+        }
+
+        function returnToLobby() {
+            gameActive = false;
+            cancelAnimationFrame(animId);
+            document.getElementById("gameView").style.display = "none";
+            document.getElementById("lobbyView").style.display = "flex";
+        }
+
+        function restartCurrentGame() {
+            document.getElementById("gameOverlay").style.display = "none";
+            startNewSession();
+        }
+
+        function startNewSession() {
+            cancelAnimationFrame(animId);
+            score = 0;
+            lives = 3;
+            level = 1;
+            playerLane = 1;
+            playerX = LANES[1];
+            entities = [];
+            particles = [];
+            floatingTexts = [];
+            slapAnimTimer = 0;
+            speedBoostTimer = 0;
+            gameActive = true;
+
+            updateHud();
+            updateTaskBanner();
+
+            if (currentGame === "baperRasta") {
+                showMemeDialogue("বাপের রাস্তায় স্বাগতম মামা! 🛺");
+            } else if (currentGame === "maroChor") {
+                showMemeDialogue("সামনে অটো পেলেই চড় বাটনে চাপ দিন! 👋");
+            } else {
+                showMemeDialogue("কাচ্চির আলু আর রোস্ট একটাও মিস করবেন না! 🍲");
+            }
+
+            lastSpawnTime = performance.now();
+            gameLoop(performance.now());
+        }
+
+        function updateHud() {
+            document.getElementById("hudScore").innerText = `স্কোর: ${score}`;
+            document.getElementById("hudLives").innerText = "❤️".repeat(Math.max(0, lives)) || "💀";
+        }
+
+        function updateTaskBanner() {
+            const banner = document.getElementById("taskBanner");
+            if (currentGame === "baperRasta") {
+                taskTarget = level * 150;
+                banner.innerText = `🎯 লেভেল ${level} টাস্ক: ব্রেক ছাড়া ${taskTarget} স্কোর করুন!`;
+            } else if (currentGame === "maroChor") {
+                taskTarget = level * 120;
+                banner.innerText = `🎯 লেভেল ${level} টাস্ক: চড় মেরে ${taskTarget} স্কোর করুন!`;
+            } else {
+                taskTarget = level * 130;
+                banner.innerText = `🎯 লেভেল ${level} টাস্ক: কাচ্চি ও রোস্ট খেয়ে ${taskTarget} স্কোর করুন!`;
+            }
+        }
+
+        function checkLevelUp() {
+            if (score >= taskTarget) {
+                level++;
+                addCoins(25);
+                playSfx("win");
+                updateTaskBanner();
+                addFloatingText(`🎉 লেভেল ${level} আনলক! +25 🪙`, 190, 200, "#00e676");
+            }
+        }
+
+        function triggerGameOver() {
+            gameActive = false;
+            playSfx("hit");
+            const earnedCoins = Math.floor(score / 10);
+            if (earnedCoins > 0) addCoins(earnedCoins);
+
+            document.getElementById("overlayTitle").innerText = "গেম ওভার মামা! 💥";
+            document.getElementById("overlayDesc").innerText = `আপনার স্কোর: ${score} | লেভেল: ${level} | বোনাস কয়েন: +${earnedCoins} 🪙`;
+            document.getElementById("gameOverlay").style.display = "flex";
+        }
+
+        /* ==============================================================
+           5. CONTROLS (TOUCH + KEYBOARD)
+        ============================================================== */
+        function moveLeft() {
+            if (!gameActive) return;
+            if (currentGame === "kacchiRush") {
+                playerX = Math.max(45, playerX - 55);
+            } else {
+                if (playerLane > 0) playerLane--;
+            }
+        }
+
+        function moveRight() {
+            if (!gameActive) return;
+            if (currentGame === "kacchiRush") {
+                playerX = Math.min(335, playerX + 55);
+            } else {
+                if (playerLane < 2) playerLane++;
+            }
+        }
+
+        function triggerAction() {
+            if (!gameActive) return;
+
+            if (currentGame === "baperRasta") {
+                // Horn + Boost + Push obstacle in same lane
+                playSfx("horn");
+                speedBoostTimer = 35;
+                const msg = DIALOGUES_BAPER_RASTA[Math.floor(Math.random() * DIALOGUES_BAPER_RASTA.length)];
+                showMemeDialogue(msg);
+
+                // Clear or push car ahead in same lane
+                entities.forEach(ent => {
+                    if (ent.lane === playerLane && ent.y > 160 && ent.y < 410 && ent.type === "car") {
+                        ent.lane = (ent.lane + 1) % 3;
+                        ent.x = LANES[ent.lane];
+                        score += 15;
+                        addFloatingText("📢 সাইড দিলো! +15", playerX, ent.y, "#00f2fe");
+                    }
+                });
+                updateHud();
+                checkLevelUp();
+
+            } else if (currentGame === "maroChor") {
+                // Slap nearby Tesla Rickshaw
+                slapAnimTimer = 18;
+                let hitAny = false;
+
+                entities.forEach(ent => {
+                    if (!ent.slapped && ent.type === "tesla" && ent.y > 210 && ent.y < 450 && Math.abs(ent.lane - playerLane) <= 1) {
+                        ent.slapped = true;
+                        ent.vx = ent.lane < playerLane ? -12 : 12;
+                        ent.vy = -8;
+                        hitAny = true;
+                        score += 20;
+                        createParticles(ent.x, ent.y, "#ffcc00", 14);
+                        addFloatingText("ঠাস!! 👋 +20", ent.x, ent.y - 10, "#ffcc00");
+                    }
+                });
+
+                if (hitAny) {
+                    playSfx("slap");
+                    const msg = DIALOGUES_MARO_CHOR[Math.floor(Math.random() * DIALOGUES_MARO_CHOR.length)];
+                    showMemeDialogue(msg);
+                    updateHud();
+                    checkLevelUp();
+                } else {
+                    playSfx("horn");
+                    addFloatingText("মিস! কাছে এসে চড় দিন!", playerX, 360, "#ff4d4d");
+                }
+
+            } else if (currentGame === "kacchiRush") {
+                playSfx("score");
+                showMemeDialogue("প্লেট রেডি রাখেন ভাইজান! 🍽️");
+            }
+        }
+
+        document.getElementById("btnLeft").addEventListener("pointerdown", (e) => { e.preventDefault(); moveLeft(); });
+        document.getElementById("btnRight").addEventListener("pointerdown", (e) => { e.preventDefault(); moveRight(); });
+        document.getElementById("btnAction").addEventListener("pointerdown", (e) => { e.preventDefault(); triggerAction(); });
+
+        window.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowLeft" || e.key === "a") moveLeft();
+            if (e.key === "ArrowRight" || e.key === "d") moveRight();
+            if (e.key === " " || e.key === "ArrowUp" || e.key === "Enter") triggerAction();
+        });
+
+        /* ==============================================================
+           6. SPAWNING & PARTICLES
+        ============================================================== */
+        let lastSpawnTime = 0;
+
+        function spawnEntity() {
+            if (currentGame === "baperRasta") {
+                const lane = Math.floor(Math.random() * 3);
+                const r = Math.random();
+                let type = "car";
+                let icon = ["🚕", "🚌", "🚓", "🚚"][Math.floor(Math.random() * 4)];
+                if (r < 0.25) {
+                    type = "tea";
+                    icon = "☕"; // Tong er Cha bonus
+                } else if (r < 0.4) {
+                    type = "pothole";
+                    icon = "🕳️";
+                }
+                entities.push({
+                    lane,
+                    x: LANES[lane],
+                    y: -50,
+                    type,
+                    icon,
+                    speed: 3.8 + level * 0.55 + Math.random() * 1.5
+                });
+
+            } else if (currentGame === "maroChor") {
+                const lane = Math.floor(Math.random() * 3);
+                const isTesla = Math.random() < 0.72;
+                entities.push({
+                    lane,
+                    x: LANES[lane],
+                    y: -50,
+                    type: isTesla ? "tesla" : "police",
+                    icon: isTesla ? "🛺" : "🚓",
+                    speed: 3.5 + level * 0.5,
+                    slapped: false,
+                    vx: 0,
+                    vy: 0,
+                    rot: 0
+                });
+
+            } else if (currentGame === "kacchiRush") {
+                const x = 45 + Math.random() * 290;
+                const r = Math.random();
+                let item = { type: "good", icon: "🥔", pts: 15, label: "কাচ্চির আলু! +15" };
+                if (r < 0.25) {
+                    item = { type: "good", icon: "🍗", pts: 20, label: "বিয়ে বাড়ির রোস্ট! +20" };
+                } else if (r < 0.45) {
+                    item = { type: "good", icon: "🥤", pts: 15, label: "শাহী বোরহানি! +15" };
+                } else if (r < 0.65) {
+                    item = { type: "good", icon: "🍛", pts: 25, label: "স্পেশাল কাচ্চি! +25" };
+                } else if (r < 0.85) {
+                    item = { type: "bad", icon: "🫘", pts: 0, label: "ছিঃ এলাচি কামড়! 🤮" };
+                } else {
+                    item = { type: "bad", icon: "❓", pts: 0, label: "মুরুব্বি: বিয়ে কবে করবা? 😭" };
+                }
+
+                entities.push({
+                    x,
+                    y: -40,
+                    ...item,
+                    speed: 3.2 + level * 0.45 + Math.random() * 1.2
+                });
+            }
+        }
+
+        function createParticles(x, y, color, count = 10) {
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x, y,
+                    vx: (Math.random() - 0.5) * 8,
+                    vy: (Math.random() - 0.5) * 8,
+                    life: 25,
+                    color
+                });
+            }
+        }
+
+        function addFloatingText(text, x, y, color = "#fff") {
+            floatingTexts.push({ text, x, y, color, life: 35 });
+        }
+
+        /* ==============================================================
+           7. MAIN GAME LOOP & RENDERING
+        ============================================================== */
+        function gameLoop(timestamp) {
+            if (!gameActive) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const spawnInterval = Math.max(480, 1050 - level * 80);
+            if (timestamp - lastSpawnTime > spawnInterval) {
+                spawnEntity();
+                lastSpawnTime = timestamp;
+            }
+
+            if (currentGame === "baperRasta" || currentGame === "maroChor") {
+                renderRoadBackground();
+                // Smooth lane interpolation
+                const targetX = LANES[playerLane];
+                playerX += (targetX - playerX) * 0.25;
+            } else {
+                renderBiyebariBackground();
+            }
+
+            // Update & Draw Entities
+            for (let i = entities.length - 1; i >= 0; i--) {
+                const ent = entities[i];
+
+                if (ent.slapped) {
+                    ent.x += ent.vx;
+                    ent.y += ent.vy;
+                    ent.rot += 0.35;
+                } else {
+                    const boost = speedBoostTimer > 0 ? 3.5 : 0;
+                    ent.y += ent.speed + boost;
+                }
+
+                // Draw Entity
+                ctx.save();
+                ctx.translate(ent.x, ent.y);
+                if (ent.rot) ctx.rotate(ent.rot);
+
+                if (currentGame === "maroChor" && ent.type === "tesla" && !ent.slapped && ent.y > 210 && ent.y < 430) {
+                    // Draw Target Ring for Slap-ready Rickshaw
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 30, 0, Math.PI * 2);
+                    ctx.strokeStyle = "#ffcc00";
+                    ctx.lineWidth = 3;
+                    ctx.stroke();
+
+                    ctx.fillStyle = "#ffcc00";
+                    ctx.font = "bold 11px 'Hind Siliguri'";
+                    ctx.textAlign = "center";
+                    ctx.fillText("চড় মারুন! 👋", 0, -35);
+                }
+
+                ctx.font = "38px Arial";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText(ent.icon, 0, 0);
+                ctx.restore();
+
+                // Collision Detection with Player (y around 415)
+                if (!ent.slapped && Math.abs(ent.y - 415) < 36 && Math.abs(ent.x - playerX) < 38) {
+                    if (currentGame === "baperRasta") {
+                        if (ent.type === "tea") {
+                            score += 25;
+                            playSfx("score");
+                            showMemeDialogue("মামা, কড়া লিকারের টংয়ের চা! ☕🔥");
+                            addFloatingText("☕ টংয়ের চা! +25", ent.x, ent.y, "#00e676");
+                        } else {
+                            lives--;
+                            playSfx("hit");
+                            createParticles(playerX, 415, "#ff2a5f", 15);
+                            showMemeDialogue("হায় হায়! অটোতে ধাক্কা লাগছে মামা! 💥");
+                            addFloatingText("💥 ধাক্কা! -1 ❤️", playerX, 390, "#ff4d4d");
+                        }
+                        entities.splice(i, 1);
+                        updateHud();
+                        checkLevelUp();
+                        if (lives <= 0) { triggerGameOver(); return; }
+                        continue;
+
+                    } else if (currentGame === "maroChor") {
+                        lives--;
+                        playSfx("hit");
+                        createParticles(playerX, 415, "#ff2a5f", 15);
+                        if (ent.type === "tesla") {
+                            showMemeDialogue("চড় না দেওয়ায় অটো আপনার গায়ের ওপর! 🛺💥");
+                        } else {
+                            showMemeDialogue("পুলিশের গাড়িতে ধাক্কা দিছেন ভাই! 🚓");
+                        }
+                        entities.splice(i, 1);
+                        updateHud();
+                        if (lives <= 0) { triggerGameOver(); return; }
+                        continue;
+
+                    } else if (currentGame === "kacchiRush") {
+                        if (ent.type === "good") {
+                            score += ent.pts;
+                            playSfx("score");
+                            createParticles(ent.x, ent.y, "#00e676", 10);
+                            addFloatingText(ent.label, ent.x, ent.y, "#ffcc00");
+                            if (Math.random() < 0.4) {
+                                showMemeDialogue(DIALOGUES_KACCHI[Math.floor(Math.random() * 3)]);
+                            }
+                        } else {
+                            lives--;
+                            playSfx("hit");
+                            createParticles(ent.x, ent.y, "#ff2a5f", 15);
+                            addFloatingText(ent.label, ent.x, ent.y, "#ff4d4d");
+                            showMemeDialogue(ent.icon === "🫘" ? DIALOGUES_KACCHI[3] : DIALOGUES_KACCHI[4]);
+                        }
+                        entities.splice(i, 1);
+                        updateHud();
+                        checkLevelUp();
+                        if (lives <= 0) { triggerGameOver(); return; }
+                        continue;
+                    }
+                }
+
+                // Passed bottom screen
+                if (ent.y > 530 || ent.x < -60 || ent.x > 440) {
+                    if (currentGame === "baperRasta" && ent.type !== "tea") {
+                        score += 10;
+                        updateHud();
+                        checkLevelUp();
+                    }
+                    entities.splice(i, 1);
+                }
+            }
+
+            // Draw Player Character
+            drawPlayer();
+
+            // Update & Draw Particles
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.life--;
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+                ctx.fill();
+                if (p.life <= 0) particles.splice(i, 1);
+            }
+
+            // Update & Draw Floating Texts
+            for (let i = floatingTexts.length - 1; i >= 0; i--) {
+                const ft = floatingTexts[i];
+                ft.y -= 1.2;
+                ft.life--;
+                ctx.fillStyle = ft.color;
+                ctx.font = "bold 14px 'Hind Siliguri'";
+                ctx.textAlign = "center";
+                ctx.fillText(ft.text, ft.x, ft.y);
+                if (ft.life <= 0) floatingTexts.splice(i, 1);
+            }
+
+            if (slapAnimTimer > 0) slapAnimTimer--;
+            if (speedBoostTimer > 0) speedBoostTimer--;
+
+            animId = requestAnimationFrame(gameLoop);
+        }
+
+        function renderRoadBackground() {
+            // Grass / Footpath
+            ctx.fillStyle = "#114b3e";
+            ctx.fillRect(0, 0, 380, 500);
+
+            // Main Asphalt Road
+            ctx.fillStyle = "#222738";
+            ctx.fillRect(25, 0, 330, 500);
+
+            // Side Curbs
+            const speed = 6 + level + (speedBoostTimer > 0 ? 5 : 0);
+            roadOffset = (roadOffset + speed) % 60;
+
+            for (let y = -60; y < 520; y += 30) {
+                const isRed = Math.floor((y + roadOffset) / 30) % 2 === 0;
+                ctx.fillStyle = isRed ? "#ff2a5f" : "#ffffff";
+                ctx.fillRect(18, y + (roadOffset % 30), 7, 30);
+                ctx.fillRect(355, y + (roadOffset % 30), 7, 30);
+            }
+
+            // Lane Dividers
+            ctx.fillStyle = "rgba(255, 255, 255, 0.55)";
+            for (let y = -60; y < 520; y += 60) {
+                ctx.fillRect(132, y + roadOffset, 5, 34);
+                ctx.fillRect(247, y + roadOffset, 5, 34);
+            }
+        }
+
+        function renderBiyebariBackground() {
+            // Royal Biye Bari Pandal Theme
+            const grad = ctx.createLinearGradient(0, 0, 0, 500);
+            grad.addColorStop(0, "#3a0ca3");
+            grad.addColorStop(1, "#1a0633");
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, 380, 500);
+
+            // Decorative Fairy Lights at Top
+            for (let x = 20; x < 380; x += 40) {
+                ctx.fillStyle = x % 80 === 0 ? "#ffcc00" : "#ff2a5f";
+                ctx.beginPath();
+                ctx.arc(x, 22, 6, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Dining Table Floor
+            ctx.fillStyle = "#4a154b";
+            ctx.fillRect(0, 445, 380, 55);
+        }
+
+        function drawPlayer() {
+            ctx.save();
+            ctx.translate(playerX, 415);
+
+            if (currentGame === "baperRasta") {
+                if (speedBoostTimer > 0) {
+                    ctx.font = "26px Arial";
+                    ctx.textAlign = "center";
+                    ctx.fillText("🔥", 0, 32);
+                }
+                ctx.font = "44px Arial";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText("🛺", 0, 0);
+
+                ctx.fillStyle = "#00e676";
+                ctx.font = "bold 11px 'Hind Siliguri'";
+                ctx.fillText("বাপের গাড়ি", 0, -32);
+
+            } else if (currentGame === "maroChor") {
+                ctx.font = "44px Arial";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText("🏍️", 0, 0);
+
+                if (slapAnimTimer > 0) {
+                    ctx.font = "42px Arial";
+                    ctx.fillText("👋", -36, -15);
+                    ctx.fillText("👋", 36, -15);
+                }
+
+            } else if (currentGame === "kacchiRush") {
+                ctx.font = "46px Arial";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText("🍽️", 0, 0);
+
+                ctx.fillStyle = "#ffcc00";
+                ctx.font = "bold 11px 'Hind Siliguri'";
+                ctx.fillText("খাদক ভাই", 0, 30);
+            }
+
+            ctx.restore();
+        }
+    </script>
+</body>
+</html>
