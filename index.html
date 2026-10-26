@@ -3,18 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>JDS 3D Desi Arcade Pro - By Jubayerul Hasan</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
-    <!-- Three.js 3D WebGL Engine -->
+    <title>BD Tesla Slapper & Baper Rasta 3D - By Jubayerul Hasan</title>
+    <!-- Authentic Bengali Fonts used in Reference -->
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@600;700;800&family=Hind+Siliguri:wght@500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <!-- Three.js 3D Engine -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         :root {
-            --bg-dark: #060811;
-            --primary: #ff1e56;
-            --secondary: #00f2fe;
-            --gold: #ffbe0b;
-            --green: #00f59b;
+            --bg-deep: #07090f;
+            --panel-bg: #111624;
+            --bd-green: #006a4e;
+            --bd-red: #f42a41;
+            --plate-yellow: #f5b700;
+            --neon-cyan: #00f0ff;
+            --neon-pink: #ff006e;
+            --neon-green: #00f59b;
+            --danger: #ff2a55;
         }
 
         * {
@@ -27,248 +31,223 @@
         }
 
         body {
-            font-family: 'Hind Siliguri', sans-serif;
-            background: radial-gradient(circle at center, #11162b 0%, #05070e 100%);
+            font-family: 'Baloo Da 2', 'Hind Siliguri', sans-serif;
+            background: var(--bg-deep);
             color: #fff;
-            height: 100vh;
             width: 100vw;
+            height: 100vh;
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* ================= 3D VIP LOCK SCREEN ================= */
-        #lockScreen {
+        /* ================= 1. VIP SECRET KEY LOCK SCREEN ================= */
+        #vipLockOverlay {
             position: fixed;
             inset: 0;
-            background: radial-gradient(circle at 50% 30%, #1b2242 0%, #060811 100%);
-            z-index: 9999;
+            z-index: 99999;
+            background: radial-gradient(circle at 50% 25%, #19223c 0%, #05070c 100%);
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 18px;
         }
 
-        .lock-box {
-            background: linear-gradient(145deg, rgba(28, 35, 65, 0.9), rgba(12, 16, 32, 0.95));
-            border: 2px solid rgba(0, 242, 254, 0.35);
-            border-radius: 28px;
-            padding: 32px 24px;
+        .lock-card {
             width: 100%;
-            max-width: 410px;
+            max-width: 400px;
+            background: linear-gradient(160deg, #151c30 0%, #0a0e1a 100%);
+            border: 2px solid var(--plate-yellow);
+            border-radius: 24px;
+            padding: 28px 22px;
             text-align: center;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 40px rgba(0, 242, 254, 0.2);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.9), 0 0 35px rgba(245, 183, 0, 0.2);
         }
 
-        .badge-3d {
+        /* Authentic Dhaka Metro Number Plate Style */
+        .number-plate {
             display: inline-block;
-            background: linear-gradient(180deg, #ffd000 0%, #ff8800 100%);
+            background: linear-gradient(180deg, #ffd000 0%, #e5a000 100%);
             color: #000;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 11px;
-            padding: 5px 16px;
-            border-radius: 50px;
-            box-shadow: 0 4px 0 #b35f00, 0 6px 15px rgba(255, 180, 0, 0.5);
+            border: 3px solid #000;
+            outline: 2px solid var(--plate-yellow);
+            border-radius: 10px;
+            padding: 6px 18px;
             margin-bottom: 14px;
+            box-shadow: 0 6px 0 #7a5200, 0 10px 20px rgba(0,0,0,0.6);
+            line-height: 1.1;
         }
 
-        .lock-title {
-            font-size: 28px;
-            font-weight: 700;
-            color: #fff;
-            text-shadow: 0 3px 12px rgba(0, 242, 254, 0.5);
-            margin-bottom: 6px;
+        .number-plate small {
+            display: block;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
         }
 
-        .key-input {
+        .number-plate b {
+            font-family: 'Orbitron', 'Baloo Da 2', sans-serif;
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .key-field {
             width: 100%;
-            padding: 15px;
-            margin: 18px 0 14px;
-            border-radius: 16px;
-            border: 2px solid rgba(0, 242, 254, 0.4);
-            background: #080b16;
-            color: var(--gold);
+            padding: 14px;
+            margin: 16px 0 12px;
+            background: #060810;
+            border: 2px solid #2b3856;
+            border-radius: 14px;
+            color: var(--plate-yellow);
             font-family: 'Orbitron', sans-serif;
             font-size: 16px;
             text-align: center;
             letter-spacing: 2px;
             outline: none;
-            box-shadow: inset 0 4px 10px rgba(0,0,0,0.8);
         }
 
-        /* Realistic 3D Glossy Button */
-        .btn-3d {
-            position: relative;
+        .key-field:focus {
+            border-color: var(--plate-yellow);
+            box-shadow: 0 0 15px rgba(245, 183, 0, 0.35);
+        }
+
+        /* Tactile 3D Arcade Buttons */
+        .arcade-btn {
             width: 100%;
-            padding: 14px 20px;
-            border: none;
-            border-radius: 16px;
-            font-family: 'Hind Siliguri', sans-serif;
+            padding: 13px 20px;
+            border: 2px solid #000;
+            border-radius: 14px;
+            font-family: 'Baloo Da 2', sans-serif;
             font-size: 18px;
-            font-weight: 700;
-            color: #fff;
+            font-weight: 800;
             cursor: pointer;
-            background: linear-gradient(180deg, #ff3366 0%, #cc0033 100%);
-            box-shadow: 0 6px 0 #800020, 0 10px 20px rgba(255, 30, 86, 0.5), inset 0 2px 2px rgba(255, 255, 255, 0.4);
-            transition: all 0.08s ease;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .btn-3d:active {
-            transform: translateY(5px);
-            box-shadow: 0 1px 0 #800020, 0 4px 10px rgba(255, 30, 86, 0.4);
-        }
-
-        .btn-3d-cyan {
-            background: linear-gradient(180deg, #00f2fe 0%, #0072ff 100%);
-            box-shadow: 0 6px 0 #003d99, 0 10px 20px rgba(0, 114, 255, 0.5), inset 0 2px 2px rgba(255, 255, 255, 0.5);
-        }
-        .btn-3d-cyan:active {
-            transform: translateY(5px);
-            box-shadow: 0 1px 0 #003d99;
-        }
-
-        .btn-3d-gold {
-            background: linear-gradient(180deg, #ffdd00 0%, #ff7700 100%);
+            background: linear-gradient(180deg, #00f59b 0%, #00a86b 100%);
             color: #000;
-            text-shadow: none;
-            box-shadow: 0 6px 0 #994700, 0 10px 25px rgba(255, 153, 0, 0.6), inset 0 2px 2px rgba(255, 255, 255, 0.7);
+            box-shadow: 0 6px 0 #005c3b, 0 10px 20px rgba(0, 245, 155, 0.35);
+            transition: transform 0.08s, box-shadow 0.08s;
         }
-        .btn-3d-gold:active {
+
+        .arcade-btn:active {
             transform: translateY(5px);
-            box-shadow: 0 1px 0 #994700;
+            box-shadow: 0 1px 0 #005c3b;
         }
 
-        .dev-footer-lock {
-            margin-top: 22px;
-            padding-top: 14px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            font-size: 13px;
-            color: #9ba4b5;
+        .arcade-btn.yellow {
+            background: linear-gradient(180deg, #ffdd00 0%, #ff9500 100%);
+            box-shadow: 0 6px 0 #995500, 0 10px 20px rgba(255, 165, 0, 0.4);
         }
+        .arcade-btn.yellow:active { box-shadow: 0 1px 0 #995500; }
 
-        /* ================= MAIN SHELL ================= */
-        #appShell {
+        .arcade-btn.pink {
+            background: linear-gradient(180deg, #ff2a6d 0%, #c90044 100%);
+            color: #fff;
+            box-shadow: 0 6px 0 #6b0024, 0 10px 20px rgba(255, 42, 109, 0.4);
+        }
+        .arcade-btn.pink:active { box-shadow: 0 1px 0 #6b0024; }
+
+        /* ================= 2. MAIN APP WRAPPER ================= */
+        #mainWrapper {
             width: 100%;
             max-width: 480px;
             height: 100vh;
             display: none;
             flex-direction: column;
             position: relative;
-            background: #080b14;
+            background: #080b13;
             overflow: hidden;
         }
 
-        /* ================= LOBBY SCREEN ================= */
-        #lobbyScreen {
+        /* ================= 3. HUB / LOBBY SCREEN ================= */
+        #hubScreen {
             flex: 1;
             display: flex;
             flex-direction: column;
-            padding: 16px;
+            padding: 14px;
             overflow-y: auto;
-            background: radial-gradient(circle at top, #18203c 0%, #080b14 100%);
+            background: radial-gradient(circle at 50% 0%, #1b2440 0%, #070a12 100%);
         }
 
-        .top-bar {
+        .hub-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(16, 22, 42, 0.9);
-            border: 1px solid rgba(0, 242, 254, 0.25);
-            padding: 12px 16px;
-            border-radius: 18px;
-            margin-bottom: 16px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            background: rgba(17, 22, 36, 0.95);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 16px;
+            padding: 10px 14px;
+            margin-bottom: 12px;
         }
 
-        .brand-title {
-            font-size: 20px;
-            font-weight: 700;
-            background: linear-gradient(90deg, #fff, var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .dev-tag {
+        .dev-badge {
             font-size: 11px;
-            color: var(--gold);
-            font-weight: 600;
-        }
-
-        .coin-box {
-            background: rgba(255, 190, 11, 0.15);
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            padding: 5px 12px;
-            border-radius: 50px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 13px;
+            color: var(--plate-yellow);
             font-weight: 700;
         }
 
-        .game-card-3d {
-            background: linear-gradient(135deg, #161e38 0%, #0d1224 100%);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 22px;
-            padding: 16px;
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            box-shadow: 0 8px 0 #05070f, 0 14px 25px rgba(0,0,0,0.6);
-            cursor: pointer;
-            transition: transform 0.15s, border-color 0.15s;
+        .mode-card {
+            background: linear-gradient(145deg, #151d32 0%, #0c101d 100%);
+            border: 2px solid rgba(255,255,255,0.12);
+            border-radius: 20px;
+            padding: 14px;
+            margin-bottom: 12px;
+            box-shadow: 0 7px 0 #04060b, 0 12px 24px rgba(0,0,0,0.6);
+            position: relative;
         }
 
-        .game-card-3d:active {
-            transform: translateY(4px);
-            box-shadow: 0 4px 0 #05070f;
+        .mode-card.featured {
+            border-color: var(--plate-yellow);
         }
 
-        .card-preview {
-            width: 74px;
-            height: 74px;
-            border-radius: 18px;
+        .mode-top {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Orbitron', sans-serif;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .mini-plate {
+            background: var(--plate-yellow);
+            color: #000;
+            border: 2px solid #000;
+            border-radius: 8px;
+            padding: 3px 10px;
             font-weight: 900;
             font-size: 11px;
-            color: #fff;
+            line-height: 1.1;
+            text-align: center;
             flex-shrink: 0;
-            box-shadow: inset 0 2px 4px rgba(255,255,255,0.4), 0 6px 15px rgba(0,0,0,0.4);
-            text-shadow: 0 2px 4px rgba(0,0,0,0.6);
         }
 
-        .card-details {
-            flex: 1;
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+            background: rgba(0,0,0,0.35);
+            padding: 8px;
+            border-radius: 12px;
+            margin: 8px 0 10px;
+            font-size: 11px;
         }
 
-        .card-details h3 {
-            font-size: 18px;
-            color: #fff;
-            margin-bottom: 3px;
+        .rule-chip {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #d0d8e8;
         }
 
-        .card-details p {
-            font-size: 12px;
-            color: #a3adc2;
-            line-height: 1.35;
+        .rule-chip b {
+            background: rgba(255,255,255,0.12);
+            padding: 1px 6px;
+            border-radius: 5px;
+            color: var(--plate-yellow);
         }
 
-        .play-btn-mini {
-            width: auto;
-            padding: 10px 16px;
-            font-size: 14px;
-            border-radius: 14px;
-        }
-
-        /* ================= 3D GAMEPORT VIEW ================= */
-        #gameScreen {
+        /* ================= 4. 3D GAMEPLAY SCREEN ================= */
+        #playScreen {
             position: relative;
             width: 100%;
             height: 100%;
@@ -276,7 +255,7 @@
             flex-direction: column;
         }
 
-        #webglContainer {
+        #canvas3D {
             position: absolute;
             inset: 0;
             width: 100%;
@@ -284,501 +263,686 @@
             z-index: 1;
         }
 
-        /* Top HUD Overlay */
-        .hud-overlay {
+        /* Authentic Top HUD (Matches BD Tesla Slapper & Baper Rasta) */
+        .game-hud {
             position: relative;
             z-index: 10;
-            padding: 12px;
+            padding: 10px 12px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
             pointer-events: none;
         }
 
-        .hud-row {
+        .hud-top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 6px;
         }
 
-        .hud-btn-back {
+        .hud-back {
             pointer-events: auto;
-            background: linear-gradient(180deg, #2b3556 0%, #161c30 100%);
-            border: 1px solid rgba(255,255,255,0.25);
+            background: #192136;
+            border: 2px solid #000;
             color: #fff;
-            padding: 8px 14px;
-            border-radius: 12px;
-            font-family: inherit;
-            font-weight: 700;
-            font-size: 13px;
-            box-shadow: 0 4px 0 #090c16;
-            cursor: pointer;
-        }
-        .hud-btn-back:active { transform: translateY(3px); box-shadow: 0 1px 0 #090c16; }
-
-        .hud-pill {
-            background: rgba(10, 14, 28, 0.85);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(0, 242, 254, 0.4);
-            padding: 6px 14px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-        }
-
-        .task-bar-3d {
-            background: linear-gradient(90deg, rgba(255, 190, 11, 0.25), rgba(0, 242, 254, 0.25));
-            backdrop-filter: blur(6px);
-            border: 1px solid var(--gold);
-            color: var(--gold);
             padding: 6px 12px;
             border-radius: 10px;
-            text-align: center;
+            font-family: inherit;
+            font-weight: 800;
             font-size: 13px;
-            font-weight: 700;
-            text-shadow: 0 1px 3px #000;
+            box-shadow: 0 4px 0 #000;
+            cursor: pointer;
         }
 
-        /* Funny Viral Dialogue Comic Bubble */
-        #viralBubble {
-            position: absolute;
-            top: 118px;
-            left: 50%;
-            transform: translateX(-50%) scale(0.7);
-            z-index: 15;
-            background: linear-gradient(180deg, #ffea00 0%, #ff9900 100%);
-            color: #000;
+        .score-box-authentic {
+            background: rgba(10, 14, 24, 0.92);
+            border: 2px solid var(--plate-yellow);
+            border-radius: 12px;
+            padding: 4px 12px;
+            text-align: center;
+            box-shadow: 0 4px 0 #000;
+        }
+
+        .score-box-authentic small {
+            display: block;
+            font-size: 10px;
+            color: #a5b1c2;
+            font-weight: 700;
+        }
+
+        .score-box-authentic b {
+            font-size: 18px;
+            color: var(--plate-yellow);
+            font-family: 'Orbitron', 'Baloo Da 2', sans-serif;
+        }
+
+        .license-pill {
+            background: rgba(10, 14, 24, 0.92);
+            border: 2px solid var(--neon-cyan);
+            border-radius: 12px;
+            padding: 6px 10px;
             font-weight: 800;
-            font-size: 15px;
-            padding: 8px 18px;
-            border-radius: 50px;
+            font-size: 14px;
+            box-shadow: 0 4px 0 #000;
+        }
+
+        /* Baper Rasta Charge Bar & Warnings */
+        #baperStatusRow {
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            background: rgba(8, 11, 20, 0.88);
+            border: 1px solid rgba(255,255,255,0.18);
+            padding: 5px 10px;
+            border-radius: 10px;
+        }
+
+        .battery-wrap {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .battery-bar-bg {
+            flex: 1;
+            height: 10px;
+            background: #222;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid #555;
+        }
+
+        #batteryFill {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #00f59b, #f5b700);
+            transition: width 0.15s;
+        }
+
+        .warning-badges {
+            display: flex;
+            gap: 5px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .warn-tag {
+            padding: 2px 7px;
+            border-radius: 6px;
+            background: #ff0055;
+            color: #fff;
+            animation: blinkWarn 0.6s infinite alternate;
+        }
+
+        @keyframes blinkWarn {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0.65; transform: scale(0.95); }
+        }
+
+        /* Viral Speech & Slap Popups */
+        #speechBanner {
+            position: absolute;
+            top: 108px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.8);
+            z-index: 20;
+            background: #ffea00;
+            color: #000;
             border: 3px solid #000;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+            border-radius: 50px;
+            padding: 6px 18px;
+            font-weight: 800;
+            font-size: 14px;
             white-space: nowrap;
+            box-shadow: 0 6px 0 #000;
             opacity: 0;
             pointer-events: none;
-            transition: 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        #viralBubble.active {
+        #speechBanner.show {
             opacity: 1;
             transform: translateX(-50%) scale(1);
         }
 
-        /* 3D Slap / Score Pop Text */
-        #popText {
+        #floatingHit {
             position: absolute;
-            top: 42%;
+            top: 38%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0.5);
-            z-index: 15;
+            z-index: 20;
             font-size: 32px;
             font-weight: 900;
             color: #ffea00;
-            text-shadow: 0 4px 0 #cc0000, 0 8px 20px #000;
-            pointer-events: none;
+            text-shadow: 0 4px 0 #000, 0 0 20px #ff0055;
             opacity: 0;
-            transition: 0.2s ease-out;
+            pointer-events: none;
+            transition: 0.18s ease-out;
         }
-        #popText.show {
+
+        #floatingHit.show {
             opacity: 1;
             transform: translate(-50%, -65%) scale(1.15);
         }
 
-        /* Bottom 3D Arcade Controls */
-        .controls-dock {
+        /* ================= 5. AUTHENTIC COCKPIT / SLAPPER CONTROLS ================= */
+        .cockpit-controls {
             margin-top: auto;
             position: relative;
-            z-index: 10;
-            padding: 14px 14px 22px;
-            background: linear-gradient(0deg, rgba(6,8,17,0.95) 0%, rgba(6,8,17,0.0) 100%);
-            display: grid;
-            grid-template-columns: 1fr 1.35fr 1fr;
-            gap: 12px;
+            z-index: 15;
+            padding: 10px 10px 18px;
+            background: linear-gradient(0deg, rgba(5,7,14,0.98) 0%, rgba(5,7,14,0.75) 75%, transparent 100%);
         }
 
-        .ctrl-3d-btn {
-            height: 64px;
-            border: none;
-            border-radius: 18px;
-            font-family: 'Hind Siliguri', sans-serif;
-            font-size: 18px;
-            font-weight: 700;
+        .control-grid-slapper {
+            display: grid;
+            grid-template-columns: 1fr 1.15fr 1.15fr 1fr;
+            gap: 8px;
+        }
+
+        .control-grid-baper {
+            display: none;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px;
+        }
+
+        .cockpit-btn {
+            height: 62px;
+            border: 2px solid #000;
+            border-radius: 16px;
+            font-family: 'Baloo Da 2', sans-serif;
+            font-weight: 800;
             color: #fff;
-            cursor: pointer;
+            background: linear-gradient(180deg, #273252 0%, #141a2e 100%);
+            box-shadow: 0 6px 0 #000, inset 0 2px 1px rgba(255,255,255,0.25);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            line-height: 1.1;
-            background: linear-gradient(180deg, #2a3559 0%, #151c33 100%);
-            border-top: 2px solid rgba(255,255,255,0.35);
-            box-shadow: 0 7px 0 #080b16, 0 12px 20px rgba(0,0,0,0.7);
+            cursor: pointer;
+            line-height: 1.05;
             transition: transform 0.06s, box-shadow 0.06s;
         }
 
-        .ctrl-3d-btn:active {
-            transform: translateY(6px);
-            box-shadow: 0 1px 0 #080b16, 0 4px 8px rgba(0,0,0,0.6);
+        .cockpit-btn:active {
+            transform: translateY(5px);
+            box-shadow: 0 1px 0 #000;
         }
 
-        .ctrl-3d-action {
+        .cockpit-btn i {
+            font-style: normal;
+            font-size: 20px;
+        }
+
+        .cockpit-btn span {
+            font-size: 12px;
+        }
+
+        .cockpit-btn.slap-btn {
             background: linear-gradient(180deg, #ffbe0b 0%, #fb5607 100%);
             color: #000;
-            font-size: 19px;
-            font-weight: 800;
-            border-top: 2px solid #fff59d;
-            box-shadow: 0 7px 0 #9a2b00, 0 0 25px rgba(251, 86, 7, 0.7);
+            box-shadow: 0 6px 0 #7a2500, 0 0 18px rgba(251, 86, 7, 0.5);
+        }
+        .cockpit-btn.slap-btn:active { box-shadow: 0 1px 0 #7a2500; }
+
+        .cockpit-btn.tan-btn {
+            background: linear-gradient(180deg, #00f59b 0%, #009e60 100%);
+            color: #000;
         }
 
-        .ctrl-3d-action:active {
-            transform: translateY(6px);
-            box-shadow: 0 1px 0 #9a2b00, 0 0 12px rgba(251, 86, 7, 0.5);
+        .cockpit-btn.bomb-btn {
+            background: linear-gradient(180deg, #ff2a55 0%, #a30022 100%);
+            color: #fff;
         }
 
-        /* Game Over Modal */
-        #gameOverModal {
+        /* ================= 6. "দৈনিক যানজট" NEWSPAPER GAME OVER MODAL ================= */
+        #newspaperModal {
             position: absolute;
             inset: 0;
-            z-index: 30;
-            background: rgba(6, 8, 17, 0.88);
+            z-index: 50;
+            background: rgba(5, 7, 14, 0.9);
             backdrop-filter: blur(8px);
             display: none;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 24px;
+            padding: 16px;
+        }
+
+        .newspaper-card {
+            width: 100%;
+            max-width: 380px;
+            background: #f4efe6;
+            color: #111;
+            border: 4px solid #111;
+            border-radius: 16px;
+            padding: 18px;
+            box-shadow: 0 20px 50px #000;
             text-align: center;
         }
 
-        .modal-card {
-            background: linear-gradient(145deg, #18203c, #0c1021);
-            border: 2px solid var(--secondary);
-            border-radius: 26px;
-            padding: 28px 22px;
-            width: 100%;
-            max-width: 360px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+        .paper-masthead {
+            border-bottom: 3px double #111;
+            padding-bottom: 6px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .paper-title {
+            font-size: 24px;
+            font-weight: 900;
+            color: #b80000;
+            letter-spacing: 0.5px;
+        }
+
+        .paper-headline {
+            background: #111;
+            color: #ffea00;
+            padding: 6px 10px;
+            font-size: 16px;
+            font-weight: 800;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .paper-stats-box {
+            background: #e6dfd3;
+            border: 2px solid #111;
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .paper-quote {
+            font-size: 12px;
+            color: #333;
+            line-height: 1.35;
+            margin-bottom: 14px;
+            font-style: italic;
         }
     </style>
 </head>
 <body>
 
-    <!-- ================= VIP LOCK SCREEN ================= -->
-    <div id="lockScreen">
-        <div class="lock-box">
-            <div class="badge-3d">REAL 3D ENGINE EDITION</div>
-            <h1 class="lock-title">দেশি আর্কেড 3D 🔥</h1>
-            <p style="font-size: 13px; color: #a3adc2;">অ্যাপটি আনলক করতে আপনার VIP Secret Key দিন</p>
+    <!-- ================= 1. VIP LOCK OVERLAY ================= -->
+    <div id="vipLockOverlay">
+        <div class="lock-card">
+            <div class="number-plate">
+                <small>ঢাকা মেট্রো-ঠাপ</small>
+                <b>JDS-VIP-3D</b>
+            </div>
+            <h1 style="font-size: 24px; font-weight: 800;">BD ভাইরাল আর্কেড প্যাক 🔥</h1>
+            <p style="font-size: 13px; color: #9aa5b8; margin-top: 4px;">অ্যাপটি আনলক করতে আপনার গোপন Secret Key দিন</p>
 
-            <input type="text" id="keyInput" class="key-input" placeholder="JDS-VIP-2026" autocomplete="off">
-            <button class="btn-3d" onclick="unlockApp()">আনলক করুন 🔓</button>
-            <div id="lockError" style="color:#ff4d4d; font-size:13px; margin-top:10px; min-height:18px; font-weight:600;"></div>
+            <input type="text" id="vipKeyInput" class="key-field" placeholder="JDS-VIP-2026" autocomplete="off">
+            <button class="arcade-btn yellow" onclick="checkVipKey()">রাস্তায় নামেন ▷</button>
+            <div id="vipKeyErr" style="color:#ff3b5c; font-size:13px; margin-top:8px; min-height:18px; font-weight:700;"></div>
 
-            <div class="dev-footer-lock">
-                <div>3D Engine Developed & Designed By</div>
-                <div style="color: var(--gold); font-size: 16px; font-weight: 700; margin-top: 2px;">👑 Jubayerul Hasan 👑</div>
-                <div style="color: var(--secondary); font-size: 11px;">Jubayer Digital Studio (JDS)</div>
+            <div style="margin-top: 18px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 12px; color: #9aa5b8;">
+                Developed & Engineered By<br>
+                <b style="color: var(--plate-yellow); font-size: 15px;">👑 Jubayerul Hasan 👑</b><br>
+                <span style="color: var(--neon-cyan); font-size: 11px;">Founder, Jubayer Digital Studio (JDS)</span>
             </div>
         </div>
     </div>
 
-    <!-- ================= MAIN APP SHELL ================= -->
-    <div id="appShell">
-        
-        <!-- LOBBY SCREEN -->
-        <div id="lobbyScreen">
-            <div class="top-bar">
+    <!-- ================= 2. MAIN APPLICATION ================= -->
+    <div id="mainWrapper">
+
+        <!-- HUB / LOBBY -->
+        <div id="hubScreen">
+            <div class="hub-header">
                 <div>
-                    <div class="brand-title">JDS 3D গেম জোন</div>
-                    <div class="dev-tag">Dev: Jubayerul Hasan</div>
+                    <div style="font-size: 18px; font-weight: 800; color: #fff;">BD ভাইরাল গেম জোন 🇧🇩</div>
+                    <div class="dev-badge">Dev: Jubayerul Hasan | JDS</div>
                 </div>
-                <div style="display:flex; gap:8px; align-items:center;">
-                    <div class="coin-box">🪙 <span id="coinCount">0</span></div>
-                    <button class="hud-btn-back" onclick="toggleAudio()" id="muteBtn">🔊</button>
-                    <button class="hud-btn-back" onclick="relockApp()">🔒</button>
+                <div style="display:flex; gap:6px; align-items:center;">
+                    <button class="hud-back" id="voiceBtn" onclick="toggleVoice()">🔊 সাউন্ড</button>
+                    <button class="hud-back" onclick="lockVipApp()">🔒</button>
                 </div>
             </div>
 
-            <div style="background: linear-gradient(135deg, #ff1e56, #7928ca); padding: 16px; border-radius: 20px; margin-bottom: 16px; box-shadow: 0 10px 25px rgba(255,30,86,0.3);">
-                <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #ffea00;">⚡ WebGL 3D Graphics</div>
-                <h2 style="font-size: 20px; margin: 2px 0;">রিয়েল 3D ভাইরাল গেম প্যাক!</h2>
-                <p style="font-size: 12px; opacity: 0.9;">অরিজিনাল ৩ডি রিকশা, ৩ডি বাইক ও ৩ডি বিয়ে বাড়ি চ্যালেঞ্জ! যেকোনো একটি সিলেক্ট করে খেলুন।</p>
+            <!-- GAME 1: BD TESLA SLAPPER -->
+            <div class="mode-card featured">
+                <div class="mode-top">
+                    <div>
+                        <h2 style="font-size: 19px; color: var(--plate-yellow);">১. BD Tesla Slapper 3D</h2>
+                        <p style="font-size: 12px; color: #b0bac9;">ধরো টেসলা, মারো চড়! বাইক নিয়ে ওভারটেক করার সময় বেপরোয়া অটোকে বাম/ডান হাতে থাপ্পড় দিন!</p>
+                    </div>
+                    <div class="mini-plate">
+                        <small>ঢাকা মেট্রো-ঠাপ</small><br>
+                        <b>TESLA<br>SLAPPER</b>
+                    </div>
+                </div>
+                <div class="rules-grid">
+                    <div class="rule-chip"><b>+10</b><span>সাধারণ চড় 👋</span></div>
+                    <div class="rule-chip"><b>+50</b><span>হেডশট কম্বো 💥</span></div>
+                    <div class="rule-chip"><b>🪪 ×7</b><span>ড্রাইভিং লাইসেন্স</span></div>
+                    <div class="rule-chip"><b>👑 ⚡</b><span>ভিআইপি ও বুস্ট</span></div>
+                </div>
+                <button class="arcade-btn yellow" onclick="launch3DMode('slapper')">খেলেন ▷ (Tesla Slapper)</button>
             </div>
 
-            <!-- Game 1 -->
-            <div class="game-card-3d" onclick="start3DGame('baperRasta')">
-                <div class="card-preview" style="background: linear-gradient(180deg, #00e676, #006633);">
-                    <span style="font-size:24px;">🛺</span>
-                    <span>3D AUTO</span>
+            <!-- GAME 2: BAPER RASTA -->
+            <div class="mode-card">
+                <div class="mode-top">
+                    <div>
+                        <h2 style="font-size: 19px; color: var(--neon-green);">২. বাপের রাস্তা (Baper Rasta 3D)</h2>
+                        <p style="font-size: 12px; color: #b0bac9;">নো লাইসেন্স, নো ব্রেক! গাড়ি-বাইক ভেঙে জাতীয় ক্ষতি বাড়ান, লাল বাস এড়িয়ে চলুন ও সার্জেন্টকে চা-পানি দিন!</p>
+                    </div>
+                    <div class="mini-plate" style="background:#00f59b;">
+                        <small>নো লাইসেন্স</small><br>
+                        <b>বাপের<br>রাস্তা</b>
+                    </div>
                 </div>
-                <div class="card-details">
-                    <h3>বাপের রাস্তা 3D</h3>
-                    <p>৩ডি সিএনজি অটো চালিয়ে হাইওয়ের বাস-কার ডজ করুন! হর্ন ও নাইট্রো মেরে সামনের গাড়ি সাইড করান!</p>
+                <div class="rules-grid">
+                    <div class="rule-chip"><b>💥 ধাক্কা</b><span>জাতীয় ক্ষতি বাড়ান</span></div>
+                    <div class="rule-chip"><b>🚌 লাল বাস</b><span>ছুঁলেই খেলা শেষ!</span></div>
+                    <div class="rule-chip"><b>⚡ হলুদ দাগ</b><span>চোরাই মেইন চার্জ</span></div>
+                    <div class="rule-chip"><b>৳ গোলাপি দাগ</b><span>সানডে মানডে ক্লোজ</span></div>
                 </div>
-                <button class="btn-3d play-btn-mini">খেলুন</button>
+                <button class="arcade-btn" onclick="launch3DMode('baperRasta')">রাস্তায় নামেন ▷ (বাপের রাস্তা)</button>
             </div>
 
-            <!-- Game 2 -->
-            <div class="game-card-3d" onclick="start3DGame('maroChor')">
-                <div class="card-preview" style="background: linear-gradient(180deg, #ff1e56, #800020);">
-                    <span style="font-size:24px;">🏍️</span>
-                    <span>3D SLAP</span>
+            <!-- GAME 3: CHANDA TRUCK PROTOCOL -->
+            <div class="mode-card">
+                <div class="mode-top">
+                    <div>
+                        <h2 style="font-size: 18px; color: var(--neon-cyan);">৩. চান্দা ট্রাক এক্সপ্রেস 3D</h2>
+                        <p style="font-size: 12px; color: #b0bac9;">হাইওয়েতে ৩ডি হেভি ট্রাক চালিয়ে রোডব্লক গুঁড়িয়ে দিন এবং স্পেশাল টোকেন সংগ্রহ করুন!</p>
+                    </div>
+                    <div class="mini-plate" style="background:#00f0ff;">
+                        <small>হাইওয়ে কিং</small><br>
+                        <b>CHANDA<br>TRUCK</b>
+                    </div>
                 </div>
-                <div class="card-details">
-                    <h3>ধরো টেসলা মারো চড় 3D</h3>
-                    <p>৩ডি স্পোর্টস বাইক নিয়ে ছুটুন! সামনে বেপরোয়া অটো (বাংলার টেসলা) পেলেই চড় মেরে আকাশে উড়িয়ে দিন!</p>
-                </div>
-                <button class="btn-3d btn-3d-gold play-btn-mini">খেলুন</button>
+                <button class="arcade-btn pink" style="margin-top:6px;" onclick="launch3DMode('chandaTruck')">ট্রাক চালান ▷</button>
             </div>
 
-            <!-- Game 3 -->
-            <div class="game-card-3d" onclick="start3DGame('kacchiRush')">
-                <div class="card-preview" style="background: linear-gradient(180deg, #ffbe0b, #cc5500);">
-                    <span style="font-size:24px;">🍲</span>
-                    <span>3D FEAST</span>
-                </div>
-                <div class="card-details">
-                    <h3>বিয়ে বাড়ি কাচ্চি রাশ 3D</h3>
-                    <p>৩ডি গোল্ডেন প্লেটে কাচ্চির আলু ও রোস্ট ক্যাচ ধরুন! কালো এলাচি ও মুরুব্বিদের লাল প্রশ্ন থেকে বাঁচুন!</p>
-                </div>
-                <button class="btn-3d btn-3d-cyan play-btn-mini">খেলুন</button>
-            </div>
-
-            <div style="margin-top:auto; text-align:center; padding-top:12px; font-size:12px; color:#7c869b;">
-                3D Graphics Engine Crafted by <strong style="color:var(--gold);">Jubayerul Hasan</strong>
+            <div style="margin-top:auto; text-align:center; padding-top:8px; font-size:11px; color:#6c788e;">
+                Original Viral Mechanics · Engineered by <b style="color:var(--plate-yellow);">Jubayerul Hasan</b>
             </div>
         </div>
 
-        <!-- 3D GAMEPLAY SCREEN -->
-        <div id="gameScreen">
-            <div id="webglContainer"></div>
+        <!-- 3D GAMEPLAY VIEW -->
+        <div id="playScreen">
+            <div id="canvas3D"></div>
 
-            <!-- Top HUD -->
-            <div class="hud-overlay">
-                <div class="hud-row">
-                    <button class="hud-btn-back" onclick="exitToLobby()">⬅ লবি</button>
-                    <div class="hud-pill" id="scoreHud">স্কোর: 0</div>
-                    <div class="hud-pill" id="livesHud">❤️❤️❤️</div>
+            <!-- Authentic Top HUD -->
+            <div class="game-hud">
+                <div class="hud-top-bar">
+                    <button class="hud-back" onclick="backToHub()">⬅ হোম</button>
+                    <div class="score-box-authentic">
+                        <small id="scoreTitle">স্কোর (ঠাপ পয়েন্ট)</small>
+                        <b id="scoreValue">0</b>
+                    </div>
+                    <div class="license-pill" id="lifePill">🪪 ×7</div>
                 </div>
-                <div class="task-bar-3d" id="taskHud">🎯 লেভেল ১ টাস্ক: ১৫০ পয়েন্ট করুন!</div>
-            </div>
 
-            <!-- Viral Comic Dialogue & Pop Effect -->
-            <div id="viralBubble">মামা সাইড দেন, বাপের রাস্তা!</div>
-            <div id="popText">ঠাস!! 👋 +25</div>
-
-            <!-- Bottom 3D Arcade Buttons -->
-            <div class="controls-dock">
-                <button class="ctrl-3d-btn" id="btnLeft3D">
-                    <span style="font-size:22px;">◀</span>
-                    <span style="font-size:12px;">বামে</span>
-                </button>
-                <button class="ctrl-3d-btn ctrl-3d-action" id="btnAction3D">
-                    <span id="actionIcon" style="font-size:22px;">📢</span>
-                    <span id="actionLabel" style="font-size:14px;">হর্ন ও নাইট্রো</span>
-                </button>
-                <button class="ctrl-3d-btn" id="btnRight3D">
-                    <span style="font-size:22px;">▶</span>
-                    <span style="font-size:12px;">ডানে</span>
-                </button>
-            </div>
-
-            <!-- Game Over Modal -->
-            <div id="gameOverModal">
-                <div class="modal-card">
-                    <div class="badge-3d">GAME OVER</div>
-                    <h2 style="font-size: 26px; color: #fff; margin-bottom: 6px;" id="overTitle">ক্র্যাশ করেছেন মামা! 💥</h2>
-                    <p style="font-size: 15px; color: var(--secondary); margin-bottom: 20px;" id="overStats">স্কোর: 0 | লেভেল: 1</p>
-                    <div style="display:flex; gap:10px;">
-                        <button class="btn-3d btn-3d-gold" onclick="restart3DGame()">আবার খেলুন 🔄</button>
-                        <button class="btn-3d btn-3d-cyan" onclick="exitToLobby()">লবি 🏠</button>
+                <!-- Baper Rasta Exclusive Status Row -->
+                <div id="baperStatusRow">
+                    <div class="battery-wrap">
+                        <span>⚡ চার্জ</span>
+                        <div class="battery-bar-bg"><div id="batteryFill"></div></div>
+                        <span id="batteryPct">100%</span>
+                    </div>
+                    <div class="warning-badges">
+                        <span class="warn-tag" id="wrongWayTag" style="display:none; background:#f5b700; color:#000;">উল্টো পথ ×২</span>
+                        <span class="warn-tag" id="publicTag" style="display:none;">🏃 পাবলিক পিছে!</span>
                     </div>
                 </div>
             </div>
-        </div>
 
+            <!-- Comic Viral Banner & Hit Popup -->
+            <div id="speechBanner">ধরো টেসলা, মারো চড়! 👋</div>
+            <div id="floatingHit">+50 ঠাস!!</div>
+
+            <!-- Cockpit Controls -->
+            <div class="cockpit-controls">
+                <!-- Controls for BD Tesla Slapper -->
+                <div class="control-grid-slapper" id="ctrlSlapper">
+                    <button class="cockpit-btn" id="sLeft"><i>‹</i><span>বামে</span></button>
+                    <button class="cockpit-btn slap-btn" id="sSlapL"><i>👋</i><span>বাম ঠাপ</span></button>
+                    <button class="cockpit-btn slap-btn" id="sSlapR"><i>🤚</i><span>ডান ঠাপ</span></button>
+                    <button class="cockpit-btn" id="sRight"><i>›</i><span>ডানে</span></button>
+                </div>
+
+                <!-- Controls for Baper Rasta (Authentic 5-Button Layout) -->
+                <div class="control-grid-baper" id="ctrlBaper">
+                    <button class="cockpit-btn" id="bLeft"><i>‹</i><span>ঘোরান</span></button>
+                    <button class="cockpit-btn" id="bRight"><i>›</i><span>ঘোরান</span></button>
+                    <button class="cockpit-btn tan-btn" id="bTan"><i>⚡</i><span>টান দেন</span></button>
+                    <button class="cockpit-btn yellow" style="color:#000; background:linear-gradient(180deg,#ffea00,#ff9900);" id="bHorn"><i>📢</i><span>হর্ন</span></button>
+                    <button class="cockpit-btn bomb-btn" id="bBomb"><i>💣</i><span>শব্দবোমা</span></button>
+                </div>
+            </div>
+
+            <!-- "দৈনিক যানজট" Newspaper Game Over Modal -->
+            <div id="newspaperModal">
+                <div class="newspaper-card">
+                    <div class="paper-masthead">
+                        <span>যানজট ১০/১০</span>
+                        <span class="paper-title">দৈনিক যানজট</span>
+                        <span>মূল্য: ১ কাপ চা</span>
+                    </div>
+                    <div class="paper-headline" id="paperHeadline">ব্রেকিং নিউজ: মাঝ রাস্তায় টেসলা কাণ্ড!</div>
+                    <div class="paper-stats-box">
+                        <div style="font-size:12px; font-weight:700; color:#444;" id="paperLabel">মোট জাতীয় ক্ষতি / স্কোর</div>
+                        <div style="font-size:28px; font-weight:900; color:#b80000;" id="paperScore">৳০</div>
+                        <div style="font-size:12px; font-weight:800; color:#006a4e; margin-top:4px;" id="paperRank">পদবী: মেট্রো ওস্তাদ 👑</div>
+                    </div>
+                    <p class="paper-quote" id="paperReport">
+                        "ঘটনাস্থলের ছবি তুলেছেন একজন পথচারী, যিনি সাহায্য না করে ভিডিও করছিলেন। ঘটনা তদন্তে ৩ সদস্যের কমিটি গঠন করা হয়েছে। এর আগের ৪১টি কমিটির প্রতিবেদন এখনও জমা পড়েনি।"
+                    </p>
+                    <div style="display:flex; gap:10px;">
+                        <button class="arcade-btn yellow" onclick="replayCurrentGame()">আবার চালান ↻</button>
+                        <button class="arcade-btn" onclick="backToHub()">হোম 🏠</button>
+                    </div>
+                    <div style="margin-top:10px; font-size:11px; font-weight:700; color:#555;">
+                        প্রকাশক ও ডেভেলপার: <b>Jubayerul Hasan (JDS)</b>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 
     <script>
         /* ==============================================================
-           1. VIP SECRET KEY SYSTEM
+           1. VIP SECRET KEY AUTHENTICATION
         ============================================================== */
-        const VALID_KEYS = ["JDS-VIP-2026", "JUBAYER-777", "SYLHET-PRO"];
-        const UNLOCK_STORE = "jds_3d_unlocked_v2";
-        const COIN_STORE = "jds_3d_coins_v2";
+        const SECRET_KEYS = ["JDS-VIP-2026", "JUBAYER-777", "SYLHET-PRO"];
+        const VIP_STORAGE = "jds_viral_bd_vip_unlocked";
 
-        let coins = parseInt(localStorage.getItem(COIN_STORE) || "0");
-        document.getElementById("coinCount").innerText = coins;
-
-        function addCoins(n) {
-            coins += n;
-            localStorage.setItem(COIN_STORE, coins);
-            document.getElementById("coinCount").innerText = coins;
-        }
-
-        function unlockApp() {
-            const val = document.getElementById("keyInput").value.trim().toUpperCase();
-            if (VALID_KEYS.includes(val)) {
-                localStorage.setItem(UNLOCK_STORE, "true");
-                sfx("win");
-                document.getElementById("lockScreen").style.display = "none";
-                document.getElementById("appShell").style.display = "flex";
+        function checkVipKey() {
+            const val = document.getElementById("vipKeyInput").value.trim().toUpperCase();
+            if (SECRET_KEYS.includes(val)) {
+                localStorage.setItem(VIP_STORAGE, "true");
+                playSound("powerup");
+                document.getElementById("vipLockOverlay").style.display = "none";
+                document.getElementById("mainWrapper").style.display = "flex";
             } else {
-                sfx("crash");
-                document.getElementById("lockError").innerText = "❌ ভুল Secret Key! জুবায়ের ভাইয়ের কাছ থেকে সঠিক কী নিন।";
+                playSound("crash");
+                document.getElementById("vipKeyErr").innerText = "❌ ভুল Secret Key! জুবায়ের ভাইয়ের কাছ থেকে সঠিক Key নিন।";
             }
         }
 
-        function relockApp() {
-            exitToLobby();
-            localStorage.removeItem(UNLOCK_STORE);
-            document.getElementById("appShell").style.display = "none";
-            document.getElementById("lockScreen").style.display = "flex";
+        function lockVipApp() {
+            backToHub();
+            localStorage.removeItem(VIP_STORAGE);
+            document.getElementById("mainWrapper").style.display = "none";
+            document.getElementById("vipLockOverlay").style.display = "flex";
         }
 
         window.addEventListener("DOMContentLoaded", () => {
-            if (localStorage.getItem(UNLOCK_STORE) === "true") {
-                document.getElementById("lockScreen").style.display = "none";
-                document.getElementById("appShell").style.display = "flex";
+            if (localStorage.getItem(VIP_STORAGE) === "true") {
+                document.getElementById("vipLockOverlay").style.display = "none";
+                document.getElementById("mainWrapper").style.display = "flex";
             }
+            document.getElementById("vipKeyInput").addEventListener("keypress", e => {
+                if (e.key === "Enter") checkVipKey();
+            });
         });
 
         /* ==============================================================
-           2. SYNTHESIZED SOUND ENGINE
+           2. WEB AUDIO + BANGLA VOICE SYNTHESIZER
         ============================================================== */
-        let audioOn = true;
-        let actx = null;
+        let soundOn = true;
+        let audioCtx = null;
 
-        function toggleAudio() {
-            audioOn = !audioOn;
-            document.getElementById("muteBtn").innerText = audioOn ? "🔊" : "🔇";
+        function toggleVoice() {
+            soundOn = !soundOn;
+            document.getElementById("voiceBtn").innerText = soundOn ? "🔊 সাউন্ড" : "🔇 মিউট";
         }
 
-        function sfx(type) {
-            if (!audioOn) return;
+        function speakViralBangla(text) {
+            if (!soundOn) return;
             try {
-                if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
-                if (actx.state === "suspended") actx.resume();
-                const osc = actx.createOscillator();
-                const gain = actx.createGain();
-                osc.connect(gain);
-                gain.connect(actx.destination);
-                const now = actx.currentTime;
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel();
+                    const utter = new SpeechSynthesisUtterance(text);
+                    utter.lang = 'bn-BD';
+                    utter.rate = 1.15;
+                    utter.pitch = 1.1;
+                    window.speechSynthesis.speak(utter);
+                }
+            } catch (e) {}
+        }
 
-                if (type === "horn") {
+        function playSound(type) {
+            if (!soundOn) return;
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === "suspended") audioCtx.resume();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                const now = audioCtx.currentTime;
+
+                if (type === "slap") {
+                    // Sharp crack + bass thump
+                    osc.type = "triangle";
+                    osc.frequency.setValueAtTime(920, now);
+                    osc.frequency.exponentialRampToValueAtTime(65, now + 0.16);
+                    gain.gain.setValueAtTime(0.4, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.16);
+                    osc.start(now); osc.stop(now + 0.16);
+                } else if (type === "horn") {
                     osc.type = "sawtooth";
-                    osc.frequency.setValueAtTime(440, now);
-                    osc.frequency.setValueAtTime(550, now + 0.08);
+                    osc.frequency.setValueAtTime(480, now);
+                    osc.frequency.setValueAtTime(590, now + 0.08);
+                    gain.gain.setValueAtTime(0.22, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.28);
+                    osc.start(now); osc.stop(now + 0.28);
+                } else if (type === "bomb") {
+                    osc.type = "sawtooth";
+                    osc.frequency.setValueAtTime(190, now);
+                    osc.frequency.exponentialRampToValueAtTime(30, now + 0.55);
+                    gain.gain.setValueAtTime(0.45, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.55);
+                    osc.start(now); osc.stop(now + 0.55);
+                } else if (type === "powerup") {
+                    osc.type = "sine";
+                    osc.frequency.setValueAtTime(520, now);
+                    osc.frequency.setValueAtTime(780, now + 0.08);
+                    osc.frequency.setValueAtTime(1040, now + 0.16);
                     gain.gain.setValueAtTime(0.2, now);
                     gain.gain.exponentialRampToValueAtTime(0.01, now + 0.32);
                     osc.start(now); osc.stop(now + 0.32);
-                } else if (type === "slap") {
-                    osc.type = "triangle";
-                    osc.frequency.setValueAtTime(850, now);
-                    osc.frequency.exponentialRampToValueAtTime(80, now + 0.18);
-                    gain.gain.setValueAtTime(0.35, now);
-                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.18);
-                    osc.start(now); osc.stop(now + 0.18);
-                } else if (type === "score") {
-                    osc.type = "sine";
-                    osc.frequency.setValueAtTime(580, now);
-                    osc.frequency.setValueAtTime(880, now + 0.07);
-                    gain.gain.setValueAtTime(0.18, now);
-                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
-                    osc.start(now); osc.stop(now + 0.2);
                 } else if (type === "crash") {
-                    osc.type = "sawtooth";
-                    osc.frequency.setValueAtTime(140, now);
-                    osc.frequency.linearRampToValueAtTime(45, now + 0.35);
+                    osc.type = "square";
+                    osc.frequency.setValueAtTime(130, now);
+                    osc.frequency.linearRampToValueAtTime(40, now + 0.35);
                     gain.gain.setValueAtTime(0.3, now);
                     gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
                     osc.start(now); osc.stop(now + 0.35);
-                } else if (type === "win") {
-                    osc.type = "triangle";
-                    osc.frequency.setValueAtTime(523, now);
-                    osc.frequency.setValueAtTime(659, now + 0.1);
-                    osc.frequency.setValueAtTime(784, now + 0.2);
-                    gain.gain.setValueAtTime(0.22, now);
-                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.45);
-                    osc.start(now); osc.stop(now + 0.45);
                 }
             } catch (e) {}
         }
 
         /* ==============================================================
-           3. UI DIALOGUES & POPUPS
+           3. VIRAL DIALOGUES & UI POPUPS
         ============================================================== */
-        let bubbleTimer = null;
-        function showViralText(txt) {
-            const el = document.getElementById("viralBubble");
-            el.innerText = txt;
-            el.classList.add("active");
-            clearTimeout(bubbleTimer);
-            bubbleTimer = setTimeout(() => el.classList.remove("active"), 1800);
+        const SLAP_QUOTES = [
+            "ধরো টেসলা, মারো চড়! 👋",
+            "ইন্ডিকেটর ছাড়া ঘুরোস ক্যান মামা?! 😡",
+            "হুটহাট মাঝ রাস্তায় ব্রেক! এই লও ঠাপ! 💥",
+            "ডাইনে বইসা বাঁয়ে যাওয়ার উস্তাদ! 👋",
+            "মেট্রো-ঠাপ স্পেশাল ডেলিভারি! 🔥"
+        ];
+
+        const BAPER_QUOTES = [
+            "রাস্তা কি আপনার বাপের?! 🛺",
+            "নো লাইসেন্স, নো ব্রেক! উড়াধুরা টান! ⚡",
+            "সার্জেন্ট মামা চা-পানি নেন, সানডে মানডে ক্লোজ! ৳",
+            "মেইন লাইন থেকে ডাইরেক্ট চার্জ! ⚡",
+            "শব্দবোমা মারছি, ঢাকা কাঁপান! 💣"
+        ];
+
+        let bannerTimer = null;
+        function showSpeech(text, speakIt = false) {
+            const el = document.getElementById("speechBanner");
+            el.innerText = text;
+            el.classList.add("show");
+            clearTimeout(bannerTimer);
+            bannerTimer = setTimeout(() => el.classList.remove("show"), 1900);
+            if (speakIt) speakViralBangla(text.replace(/[^\u0980-\u09FF\s]/g, ''));
         }
 
-        let popTimer = null;
-        function showPopEffect(txt, color = "#ffea00") {
-            const el = document.getElementById("popText");
-            el.innerText = txt;
+        let hitTimer = null;
+        function showHitPop(text, color = "#ffea00") {
+            const el = document.getElementById("floatingHit");
+            el.innerText = text;
             el.style.color = color;
             el.classList.add("show");
-            clearTimeout(popTimer);
-            popTimer = setTimeout(() => el.classList.remove("show"), 650);
+            clearTimeout(hitTimer);
+            hitTimer = setTimeout(() => el.classList.remove("show"), 600);
         }
 
-        const MEMES_RASTA = [
-            "মামা সাইড দেন, বাপের রাস্তা! 🛺",
-            "ব্রেক নাই মামা, সামনে থেকে সরেন! 🔥",
-            "ডাইনে বইসা বাঁয়ে ইন্ডিকেটর! 😂",
-            "সিগন্যাল মানি না, আমি অটোওয়ালা! 😎",
-            "উড়াধুরা টান দে মামা! 🚀"
-        ];
-
-        const MEMES_CHOR = [
-            "ঠাস!! এই লও বাংলার টেসলা! 👋",
-            "হুটহাট মাঝ রাস্তায় ঘুরোস ক্যান?! 😡",
-            "ধরো টেসলা মারো চড়! 💥",
-            "এক চড়ে অটো আউট অফ দ্য রোড! 🚀",
-            "ইন্ডিকেটর ছাড়া ঘুরবি আর জীবনে?! 👋"
-        ];
-
-        const MEMES_KACCHI = [
-            "আহ! কাচ্চির সেই নরম আলু! 🥔🤤",
-            "ভাই, আমার পাতে আরেক পিস রোস্ট দেন! 🍗",
-            "শাহী বোরহানি ছাড়া বিয়ে বাড়ি জমে না! 🥤",
-            "ছিঃ! কাচ্চির ভেতর এলাচি কামড় পড়ছে! 🤮"
-        ];
-
         /* ==============================================================
-           4. THREE.JS REAL 3D ENGINE & PROCEDURAL 3D MODELS
+           4. REAL 3D WEBGL ENGINE (THREE.JS)
         ============================================================== */
         let scene, camera, renderer;
-        let playerMesh, slapArmMesh;
-        let roadLines = [], roadsideObjs = [], obstacles = [];
-        let activeMode = null;
-        let isPlaying = false;
-        let animFrame = null;
+        let playerGroup, leftHandMesh, rightHandMesh;
+        let roadDashes = [], buildings = [], entities = [], roadZones = [];
 
-        const LANE_X = [-3.2, 0, 3.2];
-        let currentLane = 1;
-        let score = 0, lives = 3, level = 1, targetScore = 150;
-        let boostFrames = 0, slapFrames = 0, shakeFrames = 0;
-        let lastSpawn = 0;
+        let gameMode = "slapper";
+        let running = false;
+        let rafId = null;
 
-        function initThreeJS() {
-            const container = document.getElementById("webglContainer");
+        // 4 Lanes: Left-2 (Wrong Way), Left-1, Center-Right, Far-Right
+        const LANES = [-3.6, -1.2, 1.2, 3.6];
+        let laneIdx = 2;
+
+        let score = 0;
+        let licenses = 7;
+        let battery = 100;
+        let combo = 1;
+        let tanTimer = 0;
+        let slapAnimL = 0, slapAnimR = 0;
+        let camShake = 0;
+        let lastSpawnTime = 0;
+
+        function setupThreeScene() {
+            const container = document.getElementById("canvas3D");
             container.innerHTML = "";
 
             scene = new THREE.Scene();
-            scene.background = new THREE.Color(0x090d1e);
-            scene.fog = new THREE.FogExp2(0x090d1e, 0.018);
+            scene.background = new THREE.Color(0x0a0f1d);
+            scene.fog = new THREE.FogExp2(0x0a0f1d, 0.016);
 
-            camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 150);
-            camera.position.set(0, 6.2, 11.5);
-            camera.lookAt(0, 1.2, -8);
+            camera = new THREE.PerspectiveCamera(62, container.clientWidth / container.clientHeight, 0.1, 160);
+            camera.position.set(0, 6.4, 11.2);
+            camera.lookAt(0, 1.2, -10);
 
             renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
             renderer.setSize(container.clientWidth, container.clientHeight);
@@ -786,636 +950,757 @@
             renderer.shadowMap.enabled = true;
             container.appendChild(renderer.domElement);
 
-            // Lights
-            const hemiLight = new THREE.HemisphereLight(0xffffff, 0x223355, 0.85);
-            scene.add(hemiLight);
+            const hemi = new THREE.HemisphereLight(0xffffff, 0x1b263b, 0.9);
+            scene.add(hemi);
 
-            const dirLight = new THREE.DirectionalLight(0xfff5e6, 1.1);
-            dirLight.position.set(12, 25, 15);
-            dirLight.castShadow = true;
-            scene.add(dirLight);
+            const sun = new THREE.DirectionalLight(0xfff4d6, 1.15);
+            sun.position.set(15, 28, 18);
+            sun.castShadow = true;
+            scene.add(sun);
 
-            build3DEnvironment();
+            buildDhakaHighway();
         }
 
-        function build3DEnvironment() {
-            roadLines = [];
-            roadsideObjs = [];
+        function buildDhakaHighway() {
+            roadDashes = [];
+            buildings = [];
+            roadZones = [];
 
-            // Ground Grass / Stage Floor
-            const groundGeo = new THREE.PlaneGeometry(120, 160);
-            const groundMat = new THREE.MeshStandardMaterial({
-                color: activeMode === "kacchiRush" ? 0x240b36 : 0x0b3b24,
-                roughness: 0.9
-            });
-            const ground = new THREE.Mesh(groundGeo, groundMat);
-            ground.rotation.x = -Math.PI / 2;
-            ground.position.z = -50;
-            ground.receiveShadow = true;
-            scene.add(ground);
+            // Footpath & Surroundings
+            const grassGeo = new THREE.PlaneGeometry(120, 180);
+            const grassMat = new THREE.MeshStandardMaterial({ color: 0x0d2b1d, roughness: 0.9 });
+            const grass = new THREE.Mesh(grassGeo, grassMat);
+            grass.rotation.x = -Math.PI / 2;
+            grass.position.z = -60;
+            scene.add(grass);
 
-            // Main 3D Highway Asphalt / Carpet
-            const roadGeo = new THREE.PlaneGeometry(11, 160);
-            const roadMat = new THREE.MeshStandardMaterial({
-                color: activeMode === "kacchiRush" ? 0x6a040f : 0x1e2230,
-                roughness: 0.7
-            });
+            // 4-Lane Dhaka Asphalt Road
+            const roadGeo = new THREE.PlaneGeometry(11.6, 180);
+            const roadMat = new THREE.MeshStandardMaterial({ color: 0x1c2130, roughness: 0.75 });
             const road = new THREE.Mesh(roadGeo, roadMat);
             road.rotation.x = -Math.PI / 2;
             road.position.y = 0.02;
-            road.position.z = -50;
-            road.receiveShadow = true;
+            road.position.z = -60;
             scene.add(road);
 
-            // Glowing Side Barriers
-            const railGeo = new THREE.BoxGeometry(0.4, 0.5, 160);
-            const railMat = new THREE.MeshStandardMaterial({ color: 0xff1e56, emissive: 0x550011 });
-            const leftRail = new THREE.Mesh(railGeo, railMat);
-            leftRail.position.set(-5.7, 0.25, -50);
-            const rightRail = new THREE.Mesh(railGeo, railMat);
-            rightRail.position.set(5.7, 0.25, -50);
-            scene.add(leftRail, rightRail);
+            // Center Yellow Divider (Separates Wrong Way Lanes!)
+            const divGeo = new THREE.BoxGeometry(0.28, 0.12, 180);
+            const divMat = new THREE.MeshStandardMaterial({ color: 0xf5b700, emissive: 0x443000 });
+            const centerDivider = new THREE.Mesh(divGeo, divMat);
+            centerDivider.position.set(0, 0.08, -60);
+            scene.add(centerDivider);
 
-            // Animated Lane Dashes
-            const dashGeo = new THREE.PlaneGeometry(0.22, 3.2);
+            // Side Metro Pillars & Curbs
+            const curbGeo = new THREE.BoxGeometry(0.45, 0.5, 180);
+            const curbMat = new THREE.MeshStandardMaterial({ color: 0x006a4e });
+            const leftCurb = new THREE.Mesh(curbGeo, curbMat);
+            leftCurb.position.set(-6.0, 0.25, -60);
+            const rightCurb = new THREE.Mesh(curbGeo, curbMat);
+            rightCurb.position.set(6.0, 0.25, -60);
+            scene.add(leftCurb, rightCurb);
+
+            // Lane Dashes
+            const dashGeo = new THREE.PlaneGeometry(0.18, 3.0);
             const dashMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
-            for (let z = 10; z > -110; z -= 8) {
-                [-1.6, 1.6].forEach(xPos => {
-                    const dash = new THREE.Mesh(dashGeo, dashMat);
-                    dash.rotation.x = -Math.PI / 2;
-                    dash.position.set(xPos, 0.04, z);
-                    scene.add(dash);
-                    roadLines.push(dash);
+            for (let z = 12; z > -130; z -= 8) {
+                [-2.4, 2.4].forEach(x => {
+                    const d = new THREE.Mesh(dashGeo, dashMat);
+                    d.rotation.x = -Math.PI / 2;
+                    d.position.set(x, 0.04, z);
+                    scene.add(d);
+                    roadDashes.push(d);
                 });
             }
 
-            // 3D Buildings & Street Lamps along the road
-            const bColors = [0x1b263b, 0x2b2d42, 0x3a0ca3, 0x1d3557];
-            for (let z = 0; z > -115; z -= 14) {
+            // Dhaka Metro Rail Pillars & Roadside Buildings
+            const colors = [0x1b263b, 0x2b2d42, 0x1d3557, 0x3d2c8d];
+            for (let z = 0; z > -130; z -= 15) {
                 [-1, 1].forEach(side => {
-                    const h = 6 + Math.random() * 10;
-                    const bGeo = new THREE.BoxGeometry(4.5, h, 4.5);
+                    const h = 7 + Math.random() * 11;
+                    const bGeo = new THREE.BoxGeometry(4.8, h, 4.8);
                     const bMat = new THREE.MeshStandardMaterial({
-                        color: bColors[Math.floor(Math.random() * bColors.length)],
-                        roughness: 0.6
+                        color: colors[Math.floor(Math.random() * colors.length)],
+                        roughness: 0.65
                     });
-                    const building = new THREE.Mesh(bGeo, bMat);
-                    building.position.set(side * 10.5, h / 2, z);
-                    scene.add(building);
-                    roadsideObjs.push(building);
+                    const b = new THREE.Mesh(bGeo, bMat);
+                    b.position.set(side * 10.8, h / 2, z);
+                    scene.add(b);
+                    buildings.push(b);
 
-                    // Neon Pillar Light
-                    const lampGeo = new THREE.CylinderGeometry(0.1, 0.1, 5, 8);
-                    const lampMat = new THREE.MeshStandardMaterial({ color: 0x00f2fe, emissive: 0x00a8ff });
-                    const lamp = new THREE.Mesh(lampGeo, lampMat);
-                    lamp.position.set(side * 6.3, 2.5, z + 4);
-                    scene.add(lamp);
-                    roadsideObjs.push(lamp);
+                    // Streetlight
+                    const poleGeo = new THREE.CylinderGeometry(0.1, 0.12, 5.5, 8);
+                    const poleMat = new THREE.MeshStandardMaterial({ color: 0xf5b700, emissive: 0x553300 });
+                    const pole = new THREE.Mesh(poleGeo, poleMat);
+                    pole.position.set(side * 6.5, 2.75, z + 5);
+                    scene.add(pole);
+                    buildings.push(pole);
                 });
             }
         }
 
-        /* --------- 3D MODEL BUILDERS --------- */
+        /* --------- DETAILED 3D VEHICLE MODELS --------- */
 
-        // 1. 3D Bangladeshi Green/Yellow CNG Auto Rickshaw
-        function create3DRickshaw(isEnemy = false) {
-            const group = new THREE.Group();
+        // 1. "Banglar Tesla" Battery Rickshaw (Blue/Yellow/Red Hood + Thin Wheels)
+        function build3DBanglaTesla(isPlayer = false) {
+            const g = new THREE.Group();
 
-            // Lower Green Cabin
-            const bodyGeo = new THREE.BoxGeometry(1.9, 1.1, 2.7);
-            const bodyMat = new THREE.MeshStandardMaterial({
-                color: isEnemy ? 0x00b862 : 0x00e676,
-                roughness: 0.3,
-                metalness: 0.2
+            // Main Passenger Seat Box
+            const seatGeo = new THREE.BoxGeometry(1.75, 0.95, 2.3);
+            const seatMat = new THREE.MeshStandardMaterial({
+                color: isPlayer ? 0x00f59b : 0x00a8e8,
+                roughness: 0.35
             });
-            const body = new THREE.Mesh(bodyGeo, bodyMat);
-            body.position.y = 0.85;
-            body.castShadow = true;
-            group.add(body);
+            const seat = new THREE.Mesh(seatGeo, seatMat);
+            seat.position.y = 0.85;
+            g.add(seat);
 
-            // Yellow Rounded Canopy Hood
-            const roofGeo = new THREE.CylinderGeometry(0.95, 1.0, 2.6, 12, 1, false, 0, Math.PI);
-            const roofMat = new THREE.MeshStandardMaterial({ color: 0xffbe0b, roughness: 0.4 });
-            const roof = new THREE.Mesh(roofGeo, roofMat);
-            roof.rotation.z = Math.PI / 2;
-            roof.rotation.y = Math.PI / 2;
-            roof.position.set(0, 1.85, -0.05);
-            group.add(roof);
+            // Iconic Rickshaw Folding Hood (Yellow/Red)
+            const hoodGeo = new THREE.CylinderGeometry(0.92, 0.96, 2.1, 12, 1, false, 0, Math.PI);
+            const hoodMat = new THREE.MeshStandardMaterial({
+                color: isPlayer ? 0xf5b700 : 0xff2a55,
+                roughness: 0.4
+            });
+            const hood = new THREE.Mesh(hoodGeo, hoodMat);
+            hood.rotation.z = Math.PI / 2;
+            hood.rotation.y = Math.PI / 2;
+            hood.position.set(0, 1.75, 0.15);
+            g.add(hood);
 
-            // Windshield Frame
-            const glassGeo = new THREE.PlaneGeometry(1.6, 0.75);
-            const glassMat = new THREE.MeshStandardMaterial({ color: 0x80ffdb, emissive: 0x113344, side: THREE.DoubleSide });
-            const glass = new THREE.Mesh(glassGeo, glassMat);
-            glass.position.set(0, 1.5, -1.36);
-            group.add(glass);
+            // Front Handlebar Column & LED Headlight
+            const stemGeo = new THREE.CylinderGeometry(0.08, 0.08, 1.3, 8);
+            const stemMat = new THREE.MeshStandardMaterial({ color: 0xdddddd });
+            const stem = new THREE.Mesh(stemGeo, stemMat);
+            stem.position.set(0, 1.15, -1.1);
+            g.add(stem);
 
-            // Single Front Headlight
-            const lightGeo = new THREE.SphereGeometry(0.24, 12, 12);
-            const lightMat = new THREE.MeshBasicMaterial({ color: 0xffffaa });
-            const headlight = new THREE.Mesh(lightGeo, lightMat);
-            headlight.position.set(0, 0.85, -1.4);
-            group.add(headlight);
+            const lightGeo = new THREE.SphereGeometry(0.22, 12, 12);
+            const lightMat = new THREE.MeshBasicMaterial({ color: 0x00f0ff });
+            const light = new THREE.Mesh(lightGeo, lightMat);
+            light.position.set(0, 1.35, -1.25);
+            g.add(light);
 
-            // 3 Wheels
-            const wheelGeo = new THREE.CylinderGeometry(0.4, 0.4, 0.3, 14);
-            const wheelMat = new THREE.MeshStandardMaterial({ color: 0x111111 });
-            const wFront = new THREE.Mesh(wheelGeo, wheelMat);
-            wFront.rotation.z = Math.PI / 2;
-            wFront.position.set(0, 0.4, -1.2);
-
-            const wLeft = wFront.clone();
-            wLeft.position.set(-0.95, 0.4, 0.9);
-            const wRight = wFront.clone();
-            wRight.position.set(0.95, 0.4, 0.9);
-
-            group.add(wFront, wLeft, wRight);
-
-            // Target Halo if in Slap Mode
-            if (isEnemy && activeMode === "maroChor") {
-                const ringGeo = new THREE.RingGeometry(1.4, 1.7, 24);
-                const ringMat = new THREE.MeshBasicMaterial({ color: 0xffea00, side: THREE.DoubleSide });
-                const ring = new THREE.Mesh(ringGeo, ringMat);
-                ring.rotation.x = -Math.PI / 2;
-                ring.position.y = 0.08;
-                group.add(ring);
-            }
-
-            return group;
-        }
-
-        // 2. 3D Sports Motorcycle + Rider + Slap Arm
-        function create3DSportsBike() {
-            const group = new THREE.Group();
-
-            // Sleek Bike Chassis
-            const bodyGeo = new THREE.BoxGeometry(0.85, 0.85, 2.6);
-            const bodyMat = new THREE.MeshStandardMaterial({ color: 0xff1e56, metalness: 0.5, roughness: 0.2 });
-            const body = new THREE.Mesh(bodyGeo, bodyMat);
-            body.position.y = 0.8;
-            body.castShadow = true;
-            group.add(body);
-
-            // Wheels
-            const wheelGeo = new THREE.CylinderGeometry(0.48, 0.48, 0.32, 16);
-            const wheelMat = new THREE.MeshStandardMaterial({ color: 0x111111 });
-            const wf = new THREE.Mesh(wheelGeo, wheelMat);
+            // 3 Thin Rickshaw Wheels
+            const wGeo = new THREE.CylinderGeometry(0.42, 0.42, 0.18, 16);
+            const wMat = new THREE.MeshStandardMaterial({ color: 0x111111 });
+            const wf = new THREE.Mesh(wGeo, wMat);
             wf.rotation.z = Math.PI / 2;
-            wf.position.set(0, 0.48, -1.0);
-            const wb = wf.clone();
-            wb.position.set(0, 0.48, 1.0);
-            group.add(wf, wb);
+            wf.position.set(0, 0.42, -1.25);
 
-            // Rider Torso & Helmet
-            const torsoGeo = new THREE.BoxGeometry(0.9, 1.0, 0.7);
-            const torsoMat = new THREE.MeshStandardMaterial({ color: 0x1a1a2e });
-            const torso = new THREE.Mesh(torsoGeo, torsoMat);
-            torso.position.set(0, 1.6, 0.1);
-            group.add(torso);
+            const wl = wf.clone(); wl.position.set(-0.92, 0.42, 0.85);
+            const wr = wf.clone(); wr.position.set(0.92, 0.42, 0.85);
+            g.add(wf, wl, wr);
 
-            const helmetGeo = new THREE.SphereGeometry(0.42, 16, 16);
-            const helmetMat = new THREE.MeshStandardMaterial({ color: 0x00f2fe, metalness: 0.6, roughness: 0.2 });
-            const helmet = new THREE.Mesh(helmetGeo, helmetMat);
-            helmet.position.set(0, 2.35, 0.05);
-            group.add(helmet);
-
-            // Giant Golden 3D Slap Hand
-            const armGroup = new THREE.Group();
-            const palmGeo = new THREE.BoxGeometry(1.3, 0.35, 0.9);
-            const palmMat = new THREE.MeshStandardMaterial({ color: 0xffbe0b, emissive: 0x663300 });
-            const palm = new THREE.Mesh(palmGeo, palmMat);
-            palm.position.set(1.1, 0, 0);
-            armGroup.add(palm);
-            armGroup.position.set(0, 1.75, -0.2);
-            armGroup.visible = false;
-            group.add(armGroup);
-            slapArmMesh = armGroup;
-
-            return group;
-        }
-
-        // 3. 3D Traffic Car / Bus
-        function create3DTrafficVehicle(isBus = false) {
-            const group = new THREE.Group();
-            const color = isBus ? 0xd90429 : [0x3a86ff, 0x8338ec, 0xff9f1c, 0xffffff][Math.floor(Math.random() * 4)];
-            const h = isBus ? 2.2 : 1.15;
-            const l = isBus ? 4.4 : 2.9;
-
-            const boxGeo = new THREE.BoxGeometry(2.1, h, l);
-            const boxMat = new THREE.MeshStandardMaterial({ color, roughness: 0.3, metalness: 0.3 });
-            const mesh = new THREE.Mesh(boxGeo, boxMat);
-            mesh.position.y = h / 2 + 0.3;
-            mesh.castShadow = true;
-            group.add(mesh);
-
-            // Cabin Top for Sedan
-            if (!isBus) {
-                const topGeo = new THREE.BoxGeometry(1.8, 0.7, 1.6);
-                const topMat = new THREE.MeshStandardMaterial({ color: 0x111625 });
-                const top = new THREE.Mesh(topGeo, topMat);
-                top.position.set(0, 1.6, 0.1);
-                group.add(top);
+            // Slap Target Ring around enemy Tesla in Slapper mode
+            if (!isPlayer && gameMode === "slapper") {
+                const rGeo = new THREE.RingGeometry(1.3, 1.55, 24);
+                const rMat = new THREE.MeshBasicMaterial({ color: 0xf5b700, side: THREE.DoubleSide });
+                const ring = new THREE.Mesh(rGeo, rMat);
+                ring.rotation.x = -Math.PI / 2;
+                ring.position.y = 0.06;
+                g.add(ring);
             }
 
-            // Headlights
-            const hlGeo = new THREE.BoxGeometry(0.4, 0.25, 0.1);
-            const hlMat = new THREE.MeshBasicMaterial({ color: 0xffea00 });
-            const hl1 = new THREE.Mesh(hlGeo, hlMat);
-            hl1.position.set(-0.7, 0.7, l / 2 + 0.02);
-            const hl2 = hl1.clone();
-            hl2.position.x = 0.7;
-            group.add(hl1, hl2);
-
-            return group;
+            return g;
         }
 
-        // 4. 3D Golden Platter & Food Models (Kacchi Rush)
-        function create3DGoldenPlatter() {
-            const group = new THREE.Group();
-            const plateGeo = new THREE.CylinderGeometry(1.55, 1.1, 0.35, 24);
-            const plateMat = new THREE.MeshStandardMaterial({ color: 0xffbe0b, metalness: 0.7, roughness: 0.2 });
-            const plate = new THREE.Mesh(plateGeo, plateMat);
-            plate.position.y = 0.5;
-            plate.castShadow = true;
-            group.add(plate);
+        // 2. Player Biker with Left & Right Giant Slap Hands (BD Tesla Slapper)
+        function build3DSlapperBiker() {
+            const g = new THREE.Group();
 
-            const rimGeo = new THREE.TorusGeometry(1.5, 0.12, 12, 24);
-            const rimMat = new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 0.8 });
-            const rim = new THREE.Mesh(rimGeo, rimMat);
-            rim.rotation.x = Math.PI / 2;
-            rim.position.y = 0.68;
-            group.add(rim);
+            // Sport Bike Body
+            const bikeGeo = new THREE.BoxGeometry(0.85, 0.85, 2.5);
+            const bikeMat = new THREE.MeshStandardMaterial({ color: 0xff0055, metalness: 0.4, roughness: 0.25 });
+            const bike = new THREE.Mesh(bikeGeo, bikeMat);
+            bike.position.y = 0.78;
+            g.add(bike);
 
-            return group;
+            // Rider & Helmet
+            const riderGeo = new THREE.BoxGeometry(0.88, 1.0, 0.75);
+            const riderMat = new THREE.MeshStandardMaterial({ color: 0x151c30 });
+            const rider = new THREE.Mesh(riderGeo, riderMat);
+            rider.position.set(0, 1.55, 0.1);
+            g.add(rider);
+
+            const helmGeo = new THREE.SphereGeometry(0.42, 16, 16);
+            const helmMat = new THREE.MeshStandardMaterial({ color: 0xf5b700, metalness: 0.5, roughness: 0.2 });
+            const helm = new THREE.Mesh(helmGeo, helmMat);
+            helm.position.set(0, 2.3, 0.05);
+            g.add(helm);
+
+            // Left & Right 3D Slap Hands
+            const handGeo = new THREE.BoxGeometry(1.5, 0.35, 0.95);
+            const handMat = new THREE.MeshStandardMaterial({ color: 0xffbe0b, emissive: 0x663300 });
+
+            leftHandMesh = new THREE.Mesh(handGeo, handMat);
+            leftHandMesh.position.set(-1.35, 1.65, -0.2);
+            leftHandMesh.visible = false;
+            g.add(leftHandMesh);
+
+            rightHandMesh = new THREE.Mesh(handGeo, handMat);
+            rightHandMesh.position.set(1.35, 1.65, -0.2);
+            rightHandMesh.visible = false;
+            g.add(rightHandMesh);
+
+            return g;
         }
 
-        function create3DFoodItem(good = true) {
-            const group = new THREE.Group();
-            if (good) {
-                // Golden Kacchi Potato / Roast Sphere + Crown
-                const geo = new THREE.DodecahedronGeometry(0.85, 1);
-                const mat = new THREE.MeshStandardMaterial({ color: 0xff9f1c, emissive: 0x442200, roughness: 0.3 });
-                const mesh = new THREE.Mesh(geo, mat);
-                mesh.position.y = 0.9;
-                group.add(mesh);
-            } else {
-                // Spiky Red/Black Elachi Bomb
-                const geo = new THREE.OctahedronGeometry(0.85, 0);
-                const mat = new THREE.MeshStandardMaterial({ color: 0xff0033, emissive: 0x550011, wireframe: false });
-                const mesh = new THREE.Mesh(geo, mat);
-                mesh.position.y = 0.9;
-                group.add(mesh);
-            }
-            return group;
+        // 3. Killer Bus / Truck with Danger RED Glow Underneath (Baper Rasta Reference!)
+        function build3DKillerBus() {
+            const g = new THREE.Group();
+
+            const busGeo = new THREE.BoxGeometry(2.2, 2.3, 4.8);
+            const busMat = new THREE.MeshStandardMaterial({ color: 0xd90429, roughness: 0.35 });
+            const bus = new THREE.Mesh(busGeo, busMat);
+            bus.position.y = 1.45;
+            g.add(bus);
+
+            // Authentic "নিচে লাল আলো মানে দূরে থাকেন" (Red Danger Underglow!)
+            const glowGeo = new THREE.PlaneGeometry(3.2, 5.8);
+            const glowMat = new THREE.MeshBasicMaterial({
+                color: 0xff0033,
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 0.65
+            });
+            const redGlow = new THREE.Mesh(glowGeo, glowMat);
+            redGlow.rotation.x = -Math.PI / 2;
+            redGlow.position.y = 0.06;
+            g.add(redGlow);
+
+            return g;
+        }
+
+        // 4. Smashable Car / Tong Shop (Increases National Damage in Baper Rasta)
+        function build3DSmashableCar() {
+            const g = new THREE.Group();
+            const cols = [0x3a86ff, 0x8338ec, 0xffffff, 0x00f59b];
+            const cGeo = new THREE.BoxGeometry(1.9, 1.05, 2.8);
+            const cMat = new THREE.MeshStandardMaterial({ color: cols[Math.floor(Math.random() * cols.length)] });
+            const car = new THREE.Mesh(cGeo, cMat);
+            car.position.y = 0.8;
+            g.add(car);
+            return g;
+        }
+
+        // 5. Yellow Charging Zone & Pink Sergeant Bribe Zone (Baper Rasta Reference!)
+        function buildRoadZone(zoneType) {
+            const g = new THREE.Group();
+            const isCharge = zoneType === "charge";
+            const zGeo = new THREE.PlaneGeometry(2.3, 4.5);
+            const zMat = new THREE.MeshBasicMaterial({
+                color: isCharge ? 0xffea00 : 0xff007f,
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 0.75
+            });
+            const pad = new THREE.Mesh(zGeo, zMat);
+            pad.rotation.x = -Math.PI / 2;
+            pad.position.y = 0.05;
+            g.add(pad);
+
+            // Floating Pillar Indicator
+            const pGeo = new THREE.BoxGeometry(0.8, 1.2, 0.8);
+            const pMat = new THREE.MeshStandardMaterial({
+                color: isCharge ? 0xffea00 : 0xff007f,
+                emissive: isCharge ? 0x665500 : 0x660033
+            });
+            const box = new THREE.Mesh(pGeo, pMat);
+            box.position.y = 0.8;
+            g.add(box);
+
+            return g;
         }
 
         /* ==============================================================
-           5. GAME FLOW & CONTROLS
+           5. LAUNCHING & SWITCHING GAME MODES
         ============================================================== */
-        function start3DGame(mode) {
-            activeMode = mode;
-            document.getElementById("lobbyScreen").style.display = "none";
-            document.getElementById("gameScreen").style.display = "flex";
-            document.getElementById("gameOverModal").style.display = "none";
+        function launch3DMode(mode) {
+            gameMode = mode;
+            document.getElementById("hubScreen").style.display = "none";
+            document.getElementById("playScreen").style.display = "flex";
+            document.getElementById("newspaperModal").style.display = "none";
 
-            const iconEl = document.getElementById("actionIcon");
-            const labelEl = document.getElementById("actionLabel");
+            // Configure HUD & Controls per reference game
+            const baperStatus = document.getElementById("baperStatusRow");
+            const ctrlSlapper = document.getElementById("ctrlSlapper");
+            const ctrlBaper = document.getElementById("ctrlBaper");
+            const scoreTitle = document.getElementById("scoreTitle");
 
-            if (mode === "baperRasta") {
-                iconEl.innerText = "📢";
-                labelEl.innerText = "হর্ন ও নাইট্রো";
-            } else if (mode === "maroChor") {
-                iconEl.innerText = "👋";
-                labelEl.innerText = "চড় মারুন (SLAP)";
+            if (mode === "slapper") {
+                baperStatus.style.display = "none";
+                ctrlSlapper.style.display = "grid";
+                ctrlBaper.style.display = "none";
+                scoreTitle.innerText = "স্কোর (ঠাপ পয়েন্ট)";
             } else {
-                iconEl.innerText = "⚡";
-                labelEl.innerText = "ম্যাগনেট টান";
+                baperStatus.style.display = "flex";
+                ctrlSlapper.style.display = "none";
+                ctrlBaper.style.display = "grid";
+                scoreTitle.innerText = mode === "baperRasta" ? "জাতীয় ক্ষতি" : "চান্দা কালেকশন";
             }
 
-            initThreeJS();
-            resetGameState();
+            setupThreeScene();
+            startNewRun();
         }
 
-        function resetGameState() {
-            cancelAnimationFrame(animFrame);
-            obstacles.forEach(o => scene.remove(o.mesh));
-            obstacles = [];
+        function startNewRun() {
+            cancelAnimationFrame(rafId);
+            entities.forEach(e => scene.remove(e.mesh));
+            entities = [];
 
-            if (playerMesh) scene.remove(playerMesh);
+            if (playerGroup) scene.remove(playerGroup);
 
-            if (activeMode === "baperRasta") {
-                playerMesh = create3DRickshaw(false);
-                showViralText("৩ডি বাপের রাস্তায় স্বাগতম মামা! 🛺");
-            } else if (activeMode === "maroChor") {
-                playerMesh = create3DSportsBike();
-                showViralText("সামনে ৩ডি অটো পেলেই SLAP বাটনে চাপ দিন! 👋");
+            if (gameMode === "slapper") {
+                playerGroup = build3DSlapperBiker();
+                licenses = 7;
+                showSpeech("ধরো টেসলা, মারো চড়! বাম/ডান ঠাপ দিন! 👋", true);
+            } else if (gameMode === "baperRasta") {
+                playerGroup = build3DBanglaTesla(true);
+                licenses = 3;
+                showSpeech("রাস্তা আপনার বাপের! গাড়ি ভাঙুন, লাল বাস এড়িয়ে চলুন! 🛺", true);
             } else {
-                playerMesh = create3DGoldenPlatter();
-                showViralText("৩ডি গোল্ডেন প্লেটে কাচ্চি ও রোস্ট ক্যাচ ধরুন! 🍲");
+                playerGroup = build3DKillerBus();
+                licenses = 5;
+                showSpeech("চান্দা ট্রাক এক্সপ্রেস! সব গুঁড়িয়ে দিন! 🚛", true);
             }
 
-            currentLane = 1;
-            playerMesh.position.set(0, 0, 5.2);
-            scene.add(playerMesh);
+            laneIdx = 2;
+            playerGroup.position.set(LANES[laneIdx], 0, 5.2);
+            scene.add(playerGroup);
 
             score = 0;
-            lives = 3;
-            level = 1;
-            boostFrames = 0;
-            slapFrames = 0;
-            shakeFrames = 0;
-            isPlaying = true;
+            battery = 100;
+            combo = 1;
+            tanTimer = 0;
+            slapAnimL = 0;
+            slapAnimR = 0;
+            camShake = 0;
+            running = true;
 
-            refreshHUD();
-            lastSpawn = performance.now();
-            animate3D(performance.now());
+            updateAllHUD();
+            lastSpawnTime = performance.now();
+            loop3D(performance.now());
         }
 
-        function restart3DGame() {
-            document.getElementById("gameOverModal").style.display = "none";
-            resetGameState();
+        function replayCurrentGame() {
+            document.getElementById("newspaperModal").style.display = "none";
+            startNewRun();
         }
 
-        function exitToLobby() {
-            isPlaying = false;
-            cancelAnimationFrame(animFrame);
-            document.getElementById("gameScreen").style.display = "none";
-            document.getElementById("lobbyScreen").style.display = "flex";
+        function backToHub() {
+            running = false;
+            cancelAnimationFrame(rafId);
+            document.getElementById("playScreen").style.display = "none";
+            document.getElementById("hubScreen").style.display = "flex";
         }
 
-        function refreshHUD() {
-            targetScore = level * 150;
-            document.getElementById("scoreHud").innerText = `স্কোর: ${score}`;
-            document.getElementById("livesHud").innerText = "❤️".repeat(Math.max(0, lives)) || "💀";
-            document.getElementById("taskHud").innerText = `🎯 লেভেল ${level} টাস্ক: ${targetScore} পয়েন্ট করুন!`;
+        function updateAllHUD() {
+            const scoreVal = document.getElementById("scoreValue");
+            if (gameMode === "slapper") {
+                scoreVal.innerText = score;
+            } else {
+                scoreVal.innerText = `৳${score.toLocaleString('bn-BD')}`;
+            }
 
-            if (score >= targetScore) {
-                level++;
-                addCoins(30);
-                sfx("win");
-                showPopEffect(`🎉 লেভেল ${level} আনলক! +30 🪙`, "#00f59b");
-                refreshHUD();
+            document.getElementById("lifePill").innerText = `🪪 ×${Math.max(0, licenses)}`;
+
+            if (gameMode !== "slapper") {
+                const pct = Math.max(0, Math.round(battery));
+                document.getElementById("batteryFill").style.width = pct + "%";
+                document.getElementById("batteryPct").innerText = pct + "%";
+
+                // Wrong-way 2x multiplier indicator (Left 2 lanes = index 0 & 1)
+                document.getElementById("wrongWayTag").style.display = laneIdx <= 1 ? "inline-block" : "none";
+                document.getElementById("publicTag").style.display = battery < 30 ? "inline-block" : "none";
             }
         }
 
-        // Steering & Action
-        function steerLeft() {
-            if (!isPlaying) return;
-            if (currentLane > 0) currentLane--;
+        /* ==============================================================
+           6. PLAYER ACTIONS (SLAP LEFT/RIGHT, TAN, HORN, SHOBDOBOMA)
+        ============================================================== */
+        function moveLane(dir) {
+            if (!running) return;
+            laneIdx = Math.max(0, Math.min(3, laneIdx + dir));
+            updateAllHUD();
         }
 
-        function steerRight() {
-            if (!isPlaying) return;
-            if (currentLane < 2) currentLane++;
-        }
+        // BD Tesla Slapper: Directional Left/Right Slap
+        function performSlap(side) {
+            if (!running || gameMode !== "slapper") return;
 
-        function doSpecialAction() {
-            if (!isPlaying) return;
+            if (side <= 0 && leftHandMesh) {
+                leftHandMesh.visible = true;
+                slapAnimL = 14;
+            }
+            if (side >= 0 && rightHandMesh) {
+                rightHandMesh.visible = true;
+                slapAnimR = 14;
+            }
 
-            if (activeMode === "baperRasta") {
-                sfx("horn");
-                boostFrames = 35;
-                showViralText(MEMES_RASTA[Math.floor(Math.random() * MEMES_RASTA.length)]);
+            let slappedAny = false;
+            entities.forEach(ent => {
+                if (ent.slapped) return;
+                const dz = Math.abs(ent.mesh.position.z - playerGroup.position.z);
+                const laneDiff = ent.lane - laneIdx;
 
-                // Make cars ahead in the same lane panic and switch lanes!
-                obstacles.forEach(ob => {
-                    if (ob.lane === currentLane && ob.mesh.position.z < 3 && ob.mesh.position.z > -25) {
-                        ob.lane = (ob.lane + 1) % 3;
-                        score += 15;
-                        showPopEffect("📢 সাইড দিলো! +15", "#00f2fe");
+                const validSide =
+                    (side === -1 && (laneDiff === -1 || laneDiff === 0)) ||
+                    (side === 1 && (laneDiff === 1 || laneDiff === 0)) ||
+                    (side === 0 && Math.abs(laneDiff) <= 1);
+
+                if (dz < 8.5 && validSide) {
+                    if (ent.kind === "tesla" || ent.kind === "vip") {
+                        ent.slapped = true;
+                        ent.vx = laneDiff < 0 ? -0.75 : 0.75;
+                        ent.vy = 0.48;
+                        ent.vz = -0.55;
+                        slappedAny = true;
+
+                        const pts = ent.kind === "vip" ? 50 : (dz < 4.0 ? 30 : 10);
+                        score += pts;
+                        camShake = 10;
+                        showHitPop(`+${pts} ঠাস!! 👋`, pts === 50 ? "#00f59b" : "#ffea00");
+                    } else if (ent.kind === "police") {
+                        // Slapping police deducts -30!
+                        score = Math.max(0, score - 30);
+                        licenses--;
+                        playSound("crash");
+                        showHitPop("−30 পুলিশে চড়! 🚨", "#ff2a55");
                     }
-                });
-                refreshHUD();
-
-            } else if (activeMode === "maroChor") {
-                slapFrames = 16;
-                if (slapArmMesh) slapArmMesh.visible = true;
-
-                let hitCount = 0;
-                obstacles.forEach(ob => {
-                    const dz = Math.abs(ob.mesh.position.z - playerMesh.position.z);
-                    const dl = Math.abs(ob.lane - currentLane);
-                    if (!ob.slapped && ob.type === "tesla" && dz < 8.5 && dl <= 1) {
-                        ob.slapped = true;
-                        ob.vx = ob.lane < currentLane ? -0.65 : 0.65;
-                        ob.vy = 0.45;
-                        ob.vz = -0.5;
-                        hitCount++;
-                        score += 25;
-                    }
-                });
-
-                if (hitCount > 0) {
-                    sfx("slap");
-                    shakeFrames = 10;
-                    showPopEffect("ঠাস!! 👋 +25", "#ffea00");
-                    showViralText(MEMES_CHOR[Math.floor(Math.random() * MEMES_CHOR.length)]);
-                    refreshHUD();
-                } else {
-                    sfx("horn");
-                    showPopEffect("কাছে এসে চড় দিন!", "#ff4d4d");
                 }
+            });
 
-            } else if (activeMode === "kacchiRush") {
-                sfx("score");
-                // Pull nearby good food into current lane
-                obstacles.forEach(ob => {
-                    if (ob.type === "good" && ob.mesh.position.z > -18 && ob.mesh.position.z < 4) {
-                        ob.lane = currentLane;
-                    }
-                });
-                showPopEffect("⚡ কাচ্চি ম্যাগনেট!", "#00f2fe");
+            if (slappedAny) {
+                playSound("slap");
+                const q = SLAP_QUOTES[Math.floor(Math.random() * SLAP_QUOTES.length)];
+                showSpeech(q, Math.random() < 0.45);
+                updateAllHUD();
+            } else {
+                playSound("horn");
             }
         }
 
-        document.getElementById("btnLeft3D").addEventListener("pointerdown", e => { e.preventDefault(); steerLeft(); });
-        document.getElementById("btnRight3D").addEventListener("pointerdown", e => { e.preventDefault(); steerRight(); });
-        document.getElementById("btnAction3D").addEventListener("pointerdown", e => { e.preventDefault(); doSpecialAction(); });
+        // Baper Rasta: ⚡ টান দেন (Boost)
+        function triggerTan() {
+            if (!running) return;
+            if (battery <= 5) {
+                showSpeech("⚡ চার্জ শেষ! হলুদ দাগে থামেন!", true);
+                return;
+            }
+            playSound("powerup");
+            tanTimer = 40;
+            battery = Math.max(0, battery - 8);
+            showHitPop("⚡ উড়াধুরা টান!", "#00f59b");
+            updateAllHUD();
+        }
+
+        // Baper Rasta: 📢 হর্ন (Scares cars out of lane)
+        function triggerHorn() {
+            if (!running) return;
+            playSound("horn");
+            showSpeech(BAPER_QUOTES[Math.floor(Math.random() * BAPER_QUOTES.length)]);
+            entities.forEach(ent => {
+                if (ent.lane === laneIdx && ent.mesh.position.z < 4 && ent.mesh.position.z > -28 && ent.kind === "car") {
+                    ent.lane = (ent.lane + 1) % 4;
+                    score += 500;
+                    showHitPop("📢 সাইড দিলো! +৳৫০০", "#00f0ff");
+                }
+            });
+            updateAllHUD();
+        }
+
+        // Baper Rasta: 💣 শব্দবোমা (Clears screen & shakes Dhaka!)
+        function triggerShobdoboma() {
+            if (!running) return;
+            playSound("bomb");
+            camShake = 22;
+            showSpeech("💣 শব্দবোমা! পুরো ঢাকা কাঁপান!", true);
+            showHitPop("💣 শব্দবোমা ব্লাস্ট!!", "#ff2a55");
+
+            entities.forEach(ent => {
+                if (ent.mesh.position.z > -45 && ent.mesh.position.z < 6 && ent.kind !== "zone") {
+                    ent.slapped = true;
+                    ent.vx = (Math.random() - 0.5) * 1.2;
+                    ent.vy = 0.6;
+                    ent.vz = -0.6;
+                    score += 1500;
+                }
+            });
+            updateAllHUD();
+        }
+
+        // Bind Cockpit Buttons
+        document.getElementById("sLeft").addEventListener("pointerdown", e => { e.preventDefault(); moveLane(-1); });
+        document.getElementById("sRight").addEventListener("pointerdown", e => { e.preventDefault(); moveLane(1); });
+        document.getElementById("sSlapL").addEventListener("pointerdown", e => { e.preventDefault(); performSlap(-1); });
+        document.getElementById("sSlapR").addEventListener("pointerdown", e => { e.preventDefault(); performSlap(1); });
+
+        document.getElementById("bLeft").addEventListener("pointerdown", e => { e.preventDefault(); moveLane(-1); });
+        document.getElementById("bRight").addEventListener("pointerdown", e => { e.preventDefault(); moveLane(1); });
+        document.getElementById("bTan").addEventListener("pointerdown", e => { e.preventDefault(); triggerTan(); });
+        document.getElementById("bHorn").addEventListener("pointerdown", e => { e.preventDefault(); triggerHorn(); });
+        document.getElementById("bBomb").addEventListener("pointerdown", e => { e.preventDefault(); triggerShobdoboma(); });
 
         window.addEventListener("keydown", e => {
-            if (e.key === "ArrowLeft" || e.key === "a") steerLeft();
-            if (e.key === "ArrowRight" || e.key === "d") steerRight();
-            if (e.key === " " || e.key === "ArrowUp" || e.key === "Enter") doSpecialAction();
+            if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") moveLane(-1);
+            if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") moveLane(1);
+            if (gameMode === "slapper") {
+                if (e.key === "q" || e.key === "Q") performSlap(-1);
+                if (e.key === "e" || e.key === "E") performSlap(1);
+                if (e.key === " " || e.key === "ArrowUp") performSlap(0);
+            } else {
+                if (e.key === " " || e.key === "Shift" || e.key === "ArrowUp") triggerTan();
+                if (e.key === "h" || e.key === "H") triggerHorn();
+                if (e.key === "b" || e.key === "B") triggerShobdoboma();
+            }
         });
 
         /* ==============================================================
-           6. 3D SPAWNER & MAIN RENDER LOOP
+           7. ENTITY SPAWNING & MAIN 3D GAME LOOP
         ============================================================== */
-        function spawn3DObstacle() {
-            const lane = Math.floor(Math.random() * 3);
-            let mesh, type = "enemy";
+        function spawnRoadEntity() {
+            const lane = Math.floor(Math.random() * 4);
+            const r = Math.random();
+            let mesh, kind = "tesla", zoneType = null;
 
-            if (activeMode === "baperRasta") {
-                const isBus = Math.random() < 0.35;
-                mesh = create3DTrafficVehicle(isBus);
-                type = "vehicle";
-            } else if (activeMode === "maroChor") {
-                const isTesla = Math.random() < 0.75;
-                if (isTesla) {
-                    mesh = create3DRickshaw(true);
-                    type = "tesla";
+            if (gameMode === "slapper") {
+                if (r < 0.68) {
+                    mesh = build3DBanglaTesla(false);
+                    kind = "tesla";
+                } else if (r < 0.86) {
+                    mesh = build3DBanglaTesla(true);
+                    kind = "vip"; // +50 VIP Tesla
                 } else {
-                    mesh = create3DTrafficVehicle(false);
-                    type = "police";
+                    mesh = build3DSmashableCar();
+                    kind = "police";
+                }
+            } else if (gameMode === "baperRasta") {
+                if (r < 0.45) {
+                    mesh = build3DSmashableCar();
+                    kind = "car"; // Smashing increases National Damage!
+                } else if (r < 0.72) {
+                    mesh = build3DKillerBus();
+                    kind = "bus"; // Red light bus = instant danger!
+                } else if (r < 0.87) {
+                    mesh = buildRoadZone("charge");
+                    kind = "zone";
+                    zoneType = "charge";
+                } else {
+                    mesh = buildRoadZone("bribe");
+                    kind = "zone";
+                    zoneType = "bribe";
                 }
             } else {
-                const isGood = Math.random() < 0.72;
-                mesh = create3DFoodItem(isGood);
-                type = isGood ? "good" : "bad";
+                // Chanda Truck mode
+                mesh = r < 0.75 ? build3DSmashableCar() : build3DBanglaTesla(false);
+                kind = "car";
             }
 
-            mesh.position.set(LANE_X[lane], 0, -90);
+            mesh.position.set(LANES[lane], 0, -95);
             scene.add(mesh);
 
-            obstacles.push({
+            entities.push({
                 mesh,
                 lane,
-                type,
+                kind,
+                zoneType,
                 slapped: false,
                 vx: 0, vy: 0, vz: 0
             });
         }
 
-        function animate3D(now) {
-            if (!isPlaying) return;
+        function loop3D(now) {
+            if (!running) return;
 
-            const baseSpeed = 0.55 + level * 0.07 + (boostFrames > 0 ? 0.35 : 0);
+            const speed = 0.58 + (tanTimer > 0 ? 0.42 : 0);
 
-            // Spawn Interval
-            const interval = Math.max(480, 1050 - level * 85);
-            if (now - lastSpawn > interval) {
-                spawn3DObstacle();
-                lastSpawn = now;
+            if (now - lastSpawnTime > 560) {
+                spawnRoadEntity();
+                lastSpawnTime = now;
             }
 
-            // Smooth Player 3D Lane Movement & Tilt
-            const targetX = LANE_X[currentLane];
-            const dx = targetX - playerMesh.position.x;
-            playerMesh.position.x += dx * 0.18;
-            playerMesh.rotation.z = -dx * 0.12;
-            playerMesh.rotation.y = -dx * 0.08;
+            // Battery drain in Baper Rasta
+            if (gameMode === "baperRasta") {
+                battery -= 0.045;
+                if (battery <= 0) {
+                    battery = 0;
+                    triggerNewspaperGameOver("চার্জ শেষ হয়ে পাবলিকের হাতে ধরা পড়েছেন!");
+                    return;
+                }
+                if (Math.random() < 0.1) updateAllHUD();
+            }
 
-            // Camera FOV Boost & Shake Effect
-            if (boostFrames > 0) {
-                camera.fov += (72 - camera.fov) * 0.15;
-                camera.updateProjectionMatrix();
-                boostFrames--;
+            // Smooth Player Lane Interpolation & Lean
+            const targetX = LANES[laneIdx];
+            const dx = targetX - playerGroup.position.x;
+            playerGroup.position.x += dx * 0.2;
+            playerGroup.rotation.z = -dx * 0.12;
+            playerGroup.rotation.y = -dx * 0.08;
+
+            // Slap Hand Animations
+            if (slapAnimL > 0) {
+                slapAnimL--;
+                if (leftHandMesh) leftHandMesh.rotation.y = Math.sin(slapAnimL * 0.5) * 1.1;
+                if (slapAnimL === 0 && leftHandMesh) leftHandMesh.visible = false;
+            }
+            if (slapAnimR > 0) {
+                slapAnimR--;
+                if (rightHandMesh) rightHandMesh.rotation.y = -Math.sin(slapAnimR * 0.5) * 1.1;
+                if (slapAnimR === 0 && rightHandMesh) rightHandMesh.visible = false;
+            }
+
+            if (tanTimer > 0) tanTimer--;
+
+            // Camera Shake
+            if (camShake > 0) {
+                camera.position.x = (Math.random() - 0.5) * 0.7;
+                camShake--;
             } else {
-                camera.fov += (60 - camera.fov) * 0.15;
-                camera.updateProjectionMatrix();
+                camera.position.x = playerGroup.position.x * 0.35;
             }
 
-            if (shakeFrames > 0) {
-                camera.position.x = (Math.random() - 0.5) * 0.6;
-                shakeFrames--;
-            } else {
-                camera.position.x = playerMesh.position.x * 0.35;
-            }
-
-            if (slapFrames > 0) {
-                slapFrames--;
-                if (slapArmMesh) slapArmMesh.rotation.y = Math.sin(slapFrames * 0.5) * 1.2;
-                if (slapFrames === 0 && slapArmMesh) slapArmMesh.visible = false;
-            }
-
-            // Move Road Lines & Buildings
-            roadLines.forEach(dash => {
-                dash.position.z += baseSpeed;
-                if (dash.position.z > 14) dash.position.z -= 120;
+            // Animate Road & Buildings
+            roadDashes.forEach(d => {
+                d.position.z += speed;
+                if (d.position.z > 14) d.position.z -= 135;
+            });
+            buildings.forEach(b => {
+                b.position.z += speed;
+                if (b.position.z > 16) b.position.z -= 140;
             });
 
-            roadsideObjs.forEach(obj => {
-                obj.position.z += baseSpeed;
-                if (obj.position.z > 16) obj.position.z -= 125;
-            });
+            // Update Entities & Check Collisions
+            for (let i = entities.length - 1; i >= 0; i--) {
+                const ent = entities[i];
 
-            // Update 3D Obstacles
-            for (let i = obstacles.length - 1; i >= 0; i--) {
-                const ob = obstacles[i];
-
-                if (ob.slapped) {
-                    // Flying through the air in 3D after Slap!
-                    ob.mesh.position.x += ob.vx;
-                    ob.mesh.position.y += ob.vy;
-                    ob.mesh.position.z += ob.vz;
-                    ob.mesh.rotation.x += 0.18;
-                    ob.mesh.rotation.y += 0.22;
+                if (ent.slapped) {
+                    ent.mesh.position.x += ent.vx;
+                    ent.mesh.position.y += ent.vy;
+                    ent.mesh.position.z += ent.vz;
+                    ent.mesh.rotation.x += 0.2;
+                    ent.mesh.rotation.y += 0.25;
                 } else {
-                    ob.mesh.position.z += baseSpeed;
-                    ob.mesh.position.x += (LANE_X[ob.lane] - ob.mesh.position.x) * 0.15;
-                    if (activeMode === "kacchiRush") {
-                        ob.mesh.rotation.y += 0.06;
-                    }
+                    // Wrong way lanes (0 & 1) move faster towards player!
+                    const laneBoost = ent.lane <= 1 && ent.kind !== "zone" ? 0.22 : 0;
+                    ent.mesh.position.z += speed + laneBoost;
+                    ent.mesh.position.x += (LANES[ent.lane] - ent.mesh.position.x) * 0.15;
                 }
 
-                // 3D Collision Check with Player (z around 5.2)
-                const distZ = Math.abs(ob.mesh.position.z - playerMesh.position.z);
-                const distX = Math.abs(ob.mesh.position.x - playerMesh.position.x);
+                const distZ = Math.abs(ent.mesh.position.z - playerGroup.position.z);
+                const distX = Math.abs(ent.mesh.position.x - playerGroup.position.x);
 
-                if (!ob.slapped && distZ < 2.1 && distX < 1.55) {
-                    if (activeMode === "kacchiRush") {
-                        if (ob.type === "good") {
-                            score += 20;
-                            sfx("score");
-                            showPopEffect("🍗 ইয়াম্মি! +20", "#00f59b");
-                            if (Math.random() < 0.45) showViralText(MEMES_KACCHI[Math.floor(Math.random() * 3)]);
-                        } else {
-                            lives--;
-                            sfx("crash");
-                            shakeFrames = 14;
-                            showPopEffect("🤮 এলাচি কামড়! -1 ❤️", "#ff1e56");
-                            showViralText(MEMES_KACCHI[3]);
+                if (!ent.slapped && distZ < 2.2 && distX < 1.35) {
+                    if (gameMode === "slapper") {
+                        // Unslapped Tesla hit player bike!
+                        licenses--;
+                        playSound("crash");
+                        camShake = 14;
+                        showHitPop("🪪 লাইসেন্স কাটা! -1", "#ff2a55");
+                        showSpeech("চড় না দেওয়ায় অটো গায়ের ওপর উঠছে! 🛺💥");
+                        scene.remove(ent.mesh);
+                        entities.splice(i, 1);
+                        updateAllHUD();
+                        if (licenses <= 0) {
+                            triggerNewspaperGameOver("৭টি লাইসেন্সই বাতিল হয়ে গেছে!");
+                            return;
                         }
+                        continue;
+
+                    } else if (gameMode === "baperRasta") {
+                        if (ent.kind === "car") {
+                            // Smashing cars INCREASES National Damage! (2x in wrong way!)
+                            const mult = laneIdx <= 1 ? 2 : 1;
+                            const dmg = 2500 * mult;
+                            score += dmg;
+                            ent.slapped = true;
+                            ent.vx = (Math.random() - 0.5) * 0.9;
+                            ent.vy = 0.45;
+                            ent.vz = -0.5;
+                            playSound("slap");
+                            camShake = 8;
+                            showHitPop(`💥 ক্ষতি +৳${dmg}`, "#ffea00");
+                            updateAllHUD();
+                            continue;
+
+                        } else if (ent.kind === "bus") {
+                            // Red Bus = Fatal!
+                            licenses--;
+                            playSound("crash");
+                            camShake = 20;
+                            showHitPop("🚌 লাল বাসে ধাক্কা!!", "#ff2a55");
+                            scene.remove(ent.mesh);
+                            entities.splice(i, 1);
+                            updateAllHUD();
+                            if (licenses <= 0) {
+                                triggerNewspaperGameOver("লাল আলোওয়ালা বাসের নিচে টেসলা চ্যাপ্টা!");
+                                return;
+                            }
+                            continue;
+
+                        } else if (ent.kind === "zone") {
+                            playSound("powerup");
+                            if (ent.zoneType === "charge") {
+                                battery = 100;
+                                showHitPop("⚡ মেইন লাইন চার্জ ১০০%!", "#00f59b");
+                                showSpeech("হলুদ দাগে মেইন লাইন থেকে ডাইরেক্ট চার্জ! ⚡");
+                            } else {
+                                licenses = Math.min(7, licenses + 1);
+                                score += 5000;
+                                showHitPop("৳ সানডে মানডে ক্লোজ!", "#ff007f");
+                                showSpeech("গোলাপি দাগে সার্জেন্টকে চা-পানি, মামলা ক্লোজ! ৳", true);
+                            }
+                            scene.remove(ent.mesh);
+                            entities.splice(i, 1);
+                            updateAllHUD();
+                            continue;
+                        }
+
                     } else {
-                        // Crash in Road Games
-                        lives--;
-                        sfx("crash");
-                        shakeFrames = 16;
-                        showPopEffect("💥 ধাক্কা লাগছে! -1 ❤️", "#ff1e56");
-                        showViralText(activeMode === "maroChor" ? "চড় না মারায় অটো গায়ের ওপর! 🛺💥" : "হায় হায়! অটো ক্র্যাশ করছে মামা! 💥");
+                        // Chanda Truck smashes everything!
+                        score += 1000;
+                        ent.slapped = true;
+                        ent.vx = (Math.random() - 0.5) * 1.1;
+                        ent.vy = 0.55;
+                        ent.vz = -0.6;
+                        playSound("slap");
+                        showHitPop("🚛 +৳১০০০ উড়াধুরা!", "#00f0ff");
+                        updateAllHUD();
+                        continue;
                     }
-
-                    scene.remove(ob.mesh);
-                    obstacles.splice(i, 1);
-                    refreshHUD();
-
-                    if (lives <= 0) {
-                        end3DGame();
-                        return;
-                    }
-                    continue;
                 }
 
-                // Passed behind camera
-                if (ob.mesh.position.z > 14 || ob.mesh.position.y > 25) {
-                    if (!ob.slapped && activeMode === "baperRasta") {
-                        score += 10;
-                        refreshHUD();
-                    }
-                    scene.remove(ob.mesh);
-                    obstacles.splice(i, 1);
+                if (ent.mesh.position.z > 15 || ent.mesh.position.y > 28) {
+                    scene.remove(ent.mesh);
+                    entities.splice(i, 1);
                 }
             }
 
             renderer.render(scene, camera);
-            animFrame = requestAnimationFrame(animate3D);
+            rafId = requestAnimationFrame(loop3D);
         }
 
-        function end3DGame() {
-            isPlaying = false;
-            const bonus = Math.floor(score / 10);
-            if (bonus > 0) addCoins(bonus);
+        function triggerNewspaperGameOver(reasonText) {
+            running = false;
+            playSound("crash");
 
-            document.getElementById("overStats").innerText = `স্কোর: ${score} | লেভেল: ${level} | বোনাস: +${bonus} 🪙`;
-            document.getElementById("gameOverModal").style.display = "flex";
+            document.getElementById("paperHeadline").innerText = reasonText;
+            document.getElementById("paperScore").innerText =
+                gameMode === "slapper" ? `${score} পয়েন্ট` : `৳${score.toLocaleString('bn-BD')}`;
+
+            let rank = "মেট্রো শিক্ষানবিশ 🛺";
+            if (score > 300 || score > 15000) rank = "ঢাকা মেট্রো-ঠাপ সম্রাট 👑";
+            else if (score > 120 || score > 5000) rank = "বাপের রাস্তার ভিআইপি ওস্তাদ 🔥";
+
+            document.getElementById("paperRank").innerText = `পদবী: ${rank}`;
+            document.getElementById("newspaperModal").style.display = "flex";
         }
 
         window.addEventListener("resize", () => {
             if (!renderer || !camera) return;
-            const container = document.getElementById("webglContainer");
-            if (container.clientWidth > 0) {
-                camera.aspect = container.clientWidth / container.clientHeight;
+            const c = document.getElementById("canvas3D");
+            if (c.clientWidth > 0) {
+                camera.aspect = c.clientWidth / c.clientHeight;
                 camera.updateProjectionMatrix();
-                renderer.setSize(container.clientWidth, container.clientHeight);
+                renderer.setSize(c.clientWidth, c.clientHeight);
             }
         });
     </script>
